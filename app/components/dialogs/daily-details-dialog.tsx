@@ -20,7 +20,10 @@ export const DetailsDailyDialog = ({ isOpen, closeDialog }: Props) => {
           <DialogTitle className="text-2xl self-center font-bold mb-4">
             DailyRealizada
           </DialogTitle>
-          <DialogDescription className="text-sm flex items-center justify-center text-gray-400 mb-6">
+          <DialogDescription
+            asChild
+            className="text-sm flex items-center justify-center text-gray-400 mb-6"
+          >
             <div>Você já realizou essa Daily, clique para ver detalhes</div>
           </DialogDescription>
         </DialogHeader>

@@ -1,4 +1,4 @@
-import { Settings, UsersRound } from "lucide-react";
+import { Settings, UsersRound, Calendar } from "lucide-react";
 
 import {
   Sidebar,
@@ -14,8 +14,13 @@ import Image from "next/image";
 
 const items = [
   {
+    title: "Calendário",
+    url: "/",
+    icon: Calendar,
+  },
+  {
     title: "Time",
-    url: "#",
+    url: "/team",
     icon: UsersRound,
   },
   {

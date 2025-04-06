@@ -25,7 +25,7 @@ export const NewDailyDialog = ({ isOpen, closeDialog, data }: Props) => {
           <DialogTitle className="text-2xl self-center font-bold mb-4">
             Iniciar Daily
           </DialogTitle>
-          <DialogDescription className="text-sm text-gray-400 mb-6">
+          <DialogDescription asChild className="text-sm text-gray-400 mb-6">
             <div className="flex flex-col gap-2">
               <div>
                 <span className="font-semibold">Data:</span>{" "}
