@@ -8,6 +8,8 @@ import {
 import React from "react";
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
+import { redirect } from "next/navigation";
+import { v4 } from "uuid";
 
 type Props = {
   isOpen: boolean;
@@ -18,6 +20,10 @@ type Props = {
 export const NewDailyDialog = ({ isOpen, closeDialog, data }: Props) => {
   const { day, begin } = data;
 
+  const start = () => {
+    const id = v4();
+    redirect(`/daily?id=${id}`);
+  };
   return (
     <Dialog onOpenChange={closeDialog} open={isOpen}>
       <DialogContent className="p-6 rounded-lg">
@@ -39,7 +45,9 @@ export const NewDailyDialog = ({ isOpen, closeDialog, data }: Props) => {
           </DialogDescription>
         </DialogHeader>
         <div className="flex justify-end gap-2">
-          <Button className="cursor-pointer ">Iniciar</Button>
+          <Button onClick={start} className="cursor-pointer ">
+            Iniciar
+          </Button>
           <Button
             className="cursor-pointer "
             variant="ghost"
