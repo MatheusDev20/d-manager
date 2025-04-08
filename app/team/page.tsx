@@ -1,18 +1,6 @@
 import React from "react";
 import { AppTable } from "../components/table";
-
-type Developer = {
-  id: number;
-  name: string;
-  picture: string;
-  status: "ativo" | "inativo";
-  pendencies: {
-    description: string;
-    status: string;
-    customer: string;
-    priority: string;
-  }[];
-};
+import { Developer } from "../@types";
 
 export const developers: Developer[] = [
   {
@@ -22,18 +10,22 @@ export const developers: Developer[] = [
     status: "ativo",
     pendencies: [
       {
+        id: "1",
         description: "Aguardando Validação AI Digital",
         status: "Pending",
         customer: "AI Digital",
         priority: "High",
       },
       {
+        id: "1",
         description: "Review PR #456",
         status: "In Progress",
         customer: "Internal",
         priority: "Low",
       },
+
       {
+        id: "1",
         description: "Update documentation",
         status: "Completed",
         customer: "Documentation Team",
@@ -48,12 +40,14 @@ export const developers: Developer[] = [
     status: "ativo",
     pendencies: [
       {
+        id: "1",
         description: "Implement feature X",
         status: "Pending",
         customer: "Product Team",
         priority: "Medium",
       },
       {
+        id: "1",
         description: "Attend team meeting",
         status: "Completed",
         customer: "Internal",
@@ -68,12 +62,14 @@ export const developers: Developer[] = [
     status: "ativo",
     pendencies: [
       {
+        id: "1",
         description: "Refactor module Y",
         status: "In Progress",
         customer: "Development Team",
         priority: "High",
       },
       {
+        id: "1",
         description: "Write unit tests",
         status: "Pending",
         customer: "QA Team",
@@ -88,12 +84,14 @@ export const developers: Developer[] = [
     status: "ativo",
     pendencies: [
       {
+        id: "1",
         description: "Refactor module Y",
         status: "In Progress",
         customer: "Development Team",
         priority: "High",
       },
       {
+        id: "1",
         description: "Write unit tests",
         status: "Pending",
         customer: "QA Team",

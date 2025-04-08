@@ -1,3 +1,4 @@
+import { Developer } from "@/app/@types";
 import {
   Table,
   TableBody,
@@ -7,7 +8,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Developer } from "../daily/team";
 import Image from "next/image";
 
 type Props = {
