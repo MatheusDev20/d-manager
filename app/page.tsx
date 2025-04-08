@@ -36,7 +36,7 @@ export default function Home() {
   const closeDialog = () => setDialogState({ type: null, open: false });
 
   return (
-    <div className="border flex w-full pt-12 h-screen flex-col items-center">
+    <div className="border flex w-full p-4 h-screen flex-col items-center">
       <AppCalendar startNewDaily={newDaily} />
       {dialogState.type && (
         <ManagerDialogs
