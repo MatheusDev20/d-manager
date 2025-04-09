@@ -15,7 +15,9 @@ type Props = {
   groupLabel: string;
   defaultValue?: string;
   disabled?: boolean;
+  name: string;
   placeholder?: string;
+  onChange?: (value: string) => void;
 };
 
 export function AppSelect(props: Props) {
@@ -24,10 +26,16 @@ export function AppSelect(props: Props) {
     defaultValue || "",
   );
 
+  const handleValueChange = (value: string) => {
+    setSelectedValue(value);
+    if (props.onChange) props.onChange(value);
+  };
+
   return (
     <Select
+      name={props.name}
       value={selectedValue}
-      onValueChange={(value) => setSelectedValue(value)}
+      onValueChange={handleValueChange}
     >
       <SelectTrigger disabled={disabled} className="w-full mt-3">
         <SelectValue placeholder={placeholder ?? "Placeholder"} />

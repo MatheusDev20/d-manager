@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Dialog,
   DialogContent,
@@ -19,7 +21,6 @@ type Props = {
 
 export const NewDailyDialog = ({ isOpen, closeDialog, data }: Props) => {
   const { day, begin } = data;
-
   const start = () => {
     const id = v4();
     redirect(`/daily?id=${id}`);

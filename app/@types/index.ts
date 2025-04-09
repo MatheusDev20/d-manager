@@ -1,15 +1,18 @@
 type PendingTask = {
   id: string;
-  description: string;
   status: string;
+  createdAt: Date;
+  updatedAt: Date;
+  description: string;
   priority: string;
-  customer?: string;
+  customer: string | null;
+  developerId: number;
 };
 
 export type Developer = {
   id: number;
   name: string;
   picture: string;
-  status: "ativo" | "inativo";
-  pendencies: PendingTask[];
+  status: string;
+  tasks: PendingTask[];
 };

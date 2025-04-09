@@ -13,109 +13,12 @@ import { BadgeCheck, Pencil, PlusIcon } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import { NewPendecy } from "../../dialogs/new-daily-pendecy";
+import { Developer } from "@/app/@types";
 
-export type Developer = {
-  id: number;
-  name: string;
-  picture: string;
-  status: "ativo" | "inativo";
-  pendencies: {
-    description: string;
-    status: string;
-    customer: string;
-    priority: string;
-  }[];
+type Props = {
+  developers: Developer[];
 };
-
-const developers: Developer[] = [
-  {
-    id: 1,
-    name: "Matheus de Paula",
-    picture: "/avatars/matheus.jpeg",
-    status: "ativo",
-    pendencies: [
-      {
-        description: "Aguardando Validação AI Digital",
-        status: "Pending",
-        customer: "AI Digital",
-        priority: "High",
-      },
-      {
-        description: "Review PR #456",
-        status: "In Progress",
-        customer: "Internal",
-        priority: "Low",
-      },
-      {
-        description: "Update documentation",
-        status: "Completed",
-        customer: "Documentation Team",
-        priority: "Low",
-      },
-    ],
-  },
-  {
-    id: 2,
-    name: "Renata Magno",
-    picture: "/avatars/re.jpeg",
-    status: "ativo",
-    pendencies: [
-      {
-        description: "Implement feature X",
-        status: "Pending",
-        customer: "Product Team",
-        priority: "Medium",
-      },
-      {
-        description: "Attend team meeting",
-        status: "Completed",
-        customer: "Internal",
-        priority: "High",
-      },
-    ],
-  },
-  {
-    id: 3,
-    name: "Guilherme Andara",
-    picture: "/avatars/gui.jpeg",
-    status: "ativo",
-    pendencies: [
-      {
-        description: "Refactor module Y",
-        status: "In Progress",
-        customer: "Development Team",
-        priority: "High",
-      },
-      {
-        description: "Write unit tests",
-        status: "Pending",
-        customer: "QA Team",
-        priority: "High",
-      },
-    ],
-  },
-  {
-    id: 4,
-    name: "Eduardo Meira",
-    picture: "/avatars/edu.jpeg",
-    status: "ativo",
-    pendencies: [
-      {
-        description: "Refactor module Y",
-        status: "In Progress",
-        customer: "Development Team",
-        priority: "High",
-      },
-      {
-        description: "Write unit tests",
-        status: "Pending",
-        customer: "QA Team",
-        priority: "High",
-      },
-    ],
-  },
-];
-export const Team = () => {
+export const Team = ({ developers }: Props) => {
   const [newPendecy, setNewPendecy] = React.useState({
     openModal: false,
     developer: {} as Developer,
@@ -124,6 +27,14 @@ export const Team = () => {
   const addNewPendecy = (developer: Developer) => {
     setNewPendecy({ openModal: true, developer });
   };
+
+  if (developers.length === 0 || !developers) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p className="text-2xl font-bold">Nenhum desenvolvedor encontrado</p>
+      </div>
+    );
+  }
 
   return (
     <div className="p-6 w-full">
@@ -155,21 +66,21 @@ export const Team = () => {
             </AccordionTrigger>
             <AccordionContent>
               <ul className="space-y-3">
-                {developer.pendencies.map((pendency, index) => (
+                {developer.tasks.map((task) => (
                   <li
-                    key={index}
+                    key={task.id}
                     className="flex items-center justify-between gap-2 md:p-4 border rounded-md dark:bg-secondary"
                   >
                     <div className="flex gap-4 items-center">
                       <span
-                        className={`inline-block w-2 h-2 ${pickPriorityColor(pendency.priority)} rounded-full`}
+                        className={`inline-block w-2 h-2 ${pickPriorityColor(task.priority)} rounded-full`}
                       ></span>
                       <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                        {pendency.description}
+                        {task.description}
                       </span>
-                      <Badge variant="default">{pendency.customer}</Badge>
-                      <Badge variant={pickPriorityVariant(pendency.priority)}>
-                        {pendency.priority}
+                      <Badge variant="default">{task.customer}</Badge>
+                      <Badge variant={pickPriorityVariant(task.priority)}>
+                        {task.priority}
                       </Badge>
                     </div>
 

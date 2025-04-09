@@ -21,13 +21,13 @@ model Developer {
   name      String
   picture  String @db.VarChar(255)
   status String
-  pendecy_tasks PendingTasks[]
+  tasks PendingTasks[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model PendingTasks {
-   @@map("pending_tasks")
+   @@map("tasks")
     id        String   @id @default(cuid())
     description String
     status String

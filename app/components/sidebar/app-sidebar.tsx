@@ -1,3 +1,5 @@
+"use client";
+
 import { Settings, UsersRound, Calendar } from "lucide-react";
 
 import {
@@ -11,6 +13,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const items = [
   {
@@ -31,6 +34,8 @@ const items = [
 ];
 
 export function AppSidebar() {
+  const router = useRouter();
+
   return (
     <Sidebar>
       <SidebarContent>
@@ -46,7 +51,7 @@ export function AppSidebar() {
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <a href={item.url}>
+                    <a onClick={() => router.push(item.url)}>
                       <item.icon />
                       <span>{item.title}</span>
                     </a>

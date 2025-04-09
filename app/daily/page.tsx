@@ -2,10 +2,27 @@
 import { Input } from "@/components/ui/input";
 import { add, format, formatDate } from "date-fns";
 import { Team } from "../components/daily/team";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Page() {
   const initialDate = new Date();
   const endDate = add(initialDate, { minutes: 30 });
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["developers"],
+    queryFn: async () => {
+      const response = await fetch("/api/developers");
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    },
+    refetchOnWindowFocus: true,
+  });
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <main className="md:p-8 p-3 flex flex-col justify-between">
@@ -34,9 +51,7 @@ export default function Page() {
           />
         </div>
       </header>
-      <div className="flex-1">
-        <Team />
-      </div>
+      <div className="flex-1">{data && <Team developers={data} />}</div>
     </main>
   );
 }

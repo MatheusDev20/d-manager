@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Dialog,
   DialogContent,
@@ -5,11 +6,12 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import React from "react";
-import { Developer } from "../daily/team";
+import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { AppSelect } from "../select/app-select";
-import { developers } from "@/app/team/page";
+import { Developer } from "@/app/@types";
+import { Button } from "@/components/ui/button";
+import { create } from "@/app/server-actions/developers";
 
 type Props = {
   isOpen: boolean;
@@ -39,10 +41,24 @@ export const NewPendecy = ({ isOpen, closeDialog, developer }: Props) => {
 };
 
 const PendencyForm = ({ dev }: { dev: Developer }) => {
-  const allDevs = developers.map((dev) => ({
-    value: String(dev.id),
-    label: dev.name,
-  }));
+  const [formState, setFormState] = useState({
+    description: "",
+    customer: "",
+    priority: "",
+  });
+
+  const submitForm = (devId: number, formState: any) => {
+    create({ devId, formData: { ...formState, status: "Pendente" } });
+  };
+
+  const handleAnyChange = ({
+    target: { name, value },
+  }: React.ChangeEvent<HTMLInputElement>) => {
+    setFormState((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   return (
     <form className="flex flex-col gap-8">
@@ -51,7 +67,8 @@ const PendencyForm = ({ dev }: { dev: Developer }) => {
           Desenvolvedor
         </label>
         <AppSelect
-          options={allDevs}
+          name="devId"
+          options={[{ label: dev.name, value: String(dev.id) }]}
           disabled
           defaultValue={String(dev.id)}
           groupLabel="Desenvolvedores"
@@ -62,6 +79,8 @@ const PendencyForm = ({ dev }: { dev: Developer }) => {
           Descrição
         </label>
         <Input
+          name="description"
+          onChange={handleAnyChange}
           className="mt-3"
           placeholder="Configuração de VPN do cliente..."
         />
@@ -71,15 +90,24 @@ const PendencyForm = ({ dev }: { dev: Developer }) => {
           <label htmlFor="description" className="text-sm font-medium">
             Cliente de Impacto (Opcional)
           </label>
-          <Input className="mt-3" placeholder="Icatu, Magalu..." />
+          <Input
+            name="customer"
+            className="mt-3"
+            onChange={handleAnyChange}
+            placeholder="Icatu, Magalu..."
+          />
         </div>
         <div className="w-[50%]">
           <label htmlFor="description" className="text-sm font-medium">
             Prioridade
           </label>
           <AppSelect
+            name="priority"
             groupLabel="Prioridade"
             placeholder="Prioridade"
+            onChange={(value: string) => {
+              setFormState({ ...formState, priority: value });
+            }}
             options={[
               { value: "low", label: "Baixo" },
               { value: "high", label: "Alto" },
@@ -88,6 +116,15 @@ const PendencyForm = ({ dev }: { dev: Developer }) => {
           />
         </div>
       </div>
+      <Button
+        onClick={(e) => {
+          e.preventDefault();
+          submitForm(dev.id, formState);
+        }}
+        className="md:w-[50%] self-end cursor-pointer"
+      >
+        Adicionar
+      </Button>
     </form>
   );
 };

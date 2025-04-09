@@ -8,6 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { CircleMinus } from "lucide-react";
 import Image from "next/image";
 
 type Props = {
@@ -45,7 +46,13 @@ export const AppTable = ({ caption, head, values }: Props) => {
               {developer.name}
             </TableCell>
             <TableCell>{developer.status.toLocaleUpperCase()}</TableCell>
-            <TableCell>Ações</TableCell>
+            <TableCell>
+              {developer.status === "ativo" ? (
+                <CircleMinus className="w-6 h-5 cursor-pointer hover:text-green-400" />
+              ) : (
+                <p>Ativar</p>
+              )}
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>
