@@ -4,7 +4,7 @@ import { AppTable } from "../components/table";
 import { list } from "@/lib/db";
 
 export default async function Page() {
-  const developers = await list({ bringTasks: true });
+  const developers = await list({ bringTasks: false });
 
   return (
     <div className="p-6">

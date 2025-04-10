@@ -1,3 +1,4 @@
+import { TaskPriority } from "@/app/@types";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -18,16 +19,26 @@ export function pickPriorityColor(priority: string) {
   }
 }
 
-export function pickPriorityVariant(priority: string) {
+export function pickPriorityVariant(priority: TaskPriority): {
+  type:
+    | "default"
+    | "secondary"
+    | "destructive"
+    | "outline"
+    | "success"
+    | null
+    | undefined;
+  label: string;
+} {
   switch (priority) {
-    case "High":
-      return "destructive";
-    case "Medium":
-      return "outline";
-    case "Low":
-      return "success";
+    case "high":
+      return { type: "destructive", label: "Alta" };
+    case "medium":
+      return { type: "outline", label: "Média" };
+    case "low":
+      return { type: "success", label: "Baixa" };
     default:
-      return "default";
+      return { label: "Baixa", type: "default" };
   }
 }
 

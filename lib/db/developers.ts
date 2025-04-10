@@ -1,19 +1,29 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Developer } from "@/app/@types";
 import { PendingTasks } from "@/app/generated/prisma";
+import { NewTask } from "@/app/server-actions/developers";
 import prisma from "@/lib/prisma";
 import { cache } from "react";
 
 type ListAllParams = {
   bringTasks: boolean;
+  taskStatus?: "Pending" | "Completed";
 };
 
 export const list = cache(
-  async ({ bringTasks }: ListAllParams): Promise<Developer[]> => {
-    const developers = prisma.developer.findMany({
-      include: { tasks: bringTasks },
-    });
+  async ({ bringTasks, taskStatus }: ListAllParams): Promise<Developer[]> => {
+    try {
+      if (bringTasks && !taskStatus) throw new Error("Must have a status");
 
-    return developers;
+      const query = { tasks: { where: { status: taskStatus } } };
+      const developers = await prisma.developer.findMany({
+        include: bringTasks ? query : { tasks: false },
+      });
+
+      return developers as Developer[];
+    } catch (err: any) {
+      throw new Error(err);
+    }
   },
 );
 
@@ -26,18 +36,16 @@ export const list = cache(
  */
 export const addNewDeveloperTask = async (
   devId: number,
-  taskData: Omit<PendingTasks, "id">,
+  taskData: NewTask,
 ): Promise<PendingTasks> => {
-  // const { devId, ...rest } = taskData;
-
-  return await prisma.pendingTasks.create({
-    data: {
-      ...taskData,
-      // Relate the task to a developer by setting the foreign key.
-      // Alternatively, you can use a nested connect if your Prisma schema uses a relation field.
-      developerId: devId,
-      // If using a relation field, uncomment the following and adjust the field name:
-      // developer: { connect: { id: devId } },
-    },
-  });
+  try {
+    return await prisma.pendingTasks.create({
+      data: {
+        ...taskData,
+        developerId: devId,
+      },
+    });
+  } catch (error: any) {
+    throw new Error(error);
+  }
 };

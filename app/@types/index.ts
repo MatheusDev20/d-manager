@@ -4,11 +4,13 @@ type PendingTask = {
   createdAt: Date;
   updatedAt: Date;
   description: string;
-  priority: string;
+  priority: TaskPriority;
   customer: string | null;
   developerId: number;
 };
 
+export type TaskStatus = "Pending" | "Completed";
+export type TaskPriority = "high" | "medium" | "low";
 export type Developer = {
   id: number;
   name: string;

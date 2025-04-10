@@ -1,13 +1,20 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
 import { addNewDeveloperTask } from "@/lib/db";
+import { TaskStatus } from "../@types";
 
+export type NewTask = {
+  description: string;
+  customer: string;
+  priority: string;
+  status: TaskStatus;
+};
 type Args = {
   devId: number;
-  formData: any;
+  formData: NewTask;
 };
+
 export async function create(data: Args) {
-  // Validações
+  console.log("FormData", data.formData);
   await addNewDeveloperTask(data.devId, data.formData);
 }

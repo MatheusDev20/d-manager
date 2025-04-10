@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
 import {
   Dialog,
   DialogContent,
@@ -8,10 +9,12 @@ import {
 } from "@/components/ui/dialog";
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
-import { AppSelect } from "../select/app-select";
+import { AppSelect } from "../../../components/select/app-select";
 import { Developer } from "@/app/@types";
 import { Button } from "@/components/ui/button";
 import { create } from "@/app/server-actions/developers";
+import { useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 type Props = {
   isOpen: boolean;
@@ -32,7 +35,7 @@ export const NewPendecy = ({ isOpen, closeDialog, developer }: Props) => {
             asChild
             className="text-sm flex items-center justify-center text-gray-400 mb-6"
           >
-            <PendencyForm dev={developer} />
+            <PendencyForm closeDialog={closeDialog} dev={developer} />
           </DialogDescription>
         </DialogHeader>
       </DialogContent>
@@ -40,15 +43,35 @@ export const NewPendecy = ({ isOpen, closeDialog, developer }: Props) => {
   );
 };
 
-const PendencyForm = ({ dev }: { dev: Developer }) => {
-  const [formState, setFormState] = useState({
+type Form = {
+  customer: string;
+  priority: string;
+  description: string;
+};
+const PendencyForm = ({
+  dev,
+  closeDialog,
+}: {
+  dev: Developer;
+  closeDialog: any;
+}) => {
+  const queryClient = useQueryClient();
+  const [formState, setFormState] = useState<Form>({
     description: "",
     customer: "",
     priority: "",
   });
 
-  const submitForm = (devId: number, formState: any) => {
-    create({ devId, formData: { ...formState, status: "Pendente" } });
+  const submitForm = async (devId: number, formState: Form) => {
+    await create({ devId, formData: { ...formState, status: "Pending" } });
+    queryClient.invalidateQueries({ queryKey: ["developers"] });
+
+    closeDialog();
+    toast.success("Pendência criada com sucesso!", {
+      position: "top-right",
+      duration: 5000,
+      richColors: true,
+    });
   };
 
   const handleAnyChange = ({
@@ -121,6 +144,11 @@ const PendencyForm = ({ dev }: { dev: Developer }) => {
           e.preventDefault();
           submitForm(dev.id, formState);
         }}
+        /* Customer is optional */
+        disabled={Object.values({
+          description: formState.description,
+          priority: formState.priority,
+        }).some((value) => !value)}
         className="md:w-[50%] self-end cursor-pointer"
       >
         Adicionar
