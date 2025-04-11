@@ -6,8 +6,9 @@
     "dev": "next dev --turbopack",
     "docker:dev": "docker-compose up --detach",
     "migrate:dev": "npx prisma migrate dev --name --",
-    "build": "next build",
+    "build": "npm run vercel-build",
     "start": "next start",
+    "vercel-build": "prisma generate && prisma migrate deploy && next build",
     "lint": "next lint",
     "db:seed": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/seed.ts",
     "postinstall": "prisma generate"
