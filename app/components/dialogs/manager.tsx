@@ -23,7 +23,6 @@ export const ManagerDialogs = ({ dialogState, closeDialog }: Props) => {
       if (response.ok) {
         const parsed = await response.json();
         const { data, status } = parsed;
-
         return { daily: data, status };
       }
 
