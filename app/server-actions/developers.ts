@@ -14,7 +14,6 @@ type Args = {
   formData: NewTask;
 };
 
-export async function create(data: Args) {
-  console.log("FormData", data.formData);
+export async function createNewTaks(data: Args) {
   await addNewDeveloperTask(data.devId, data.formData);
 }

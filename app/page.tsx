@@ -1,7 +1,7 @@
 import { HomeCalendar } from "./components/home-calendar";
 
 export type StartNewDaily = {
-  day: Date | null;
+  day: string;
   begin: Date | null;
   isPastDate: boolean;
 };

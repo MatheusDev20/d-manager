@@ -1,31 +1,57 @@
-import { StartNewDaily } from "@/app/page";
+import { format, isToday } from "date-fns";
 import { DetailsDailyDialog } from "./daily-details-dialog";
 import { NewDailyDialog } from "./new-daily-dialog";
+import { useQuery } from "@tanstack/react-query";
+import { Daily } from "@/app/@types";
 
 type Props = {
-  type: "new" | "details" | null;
-  isOpen: boolean;
+  dialogState: {
+    params: { date: Date | null };
+    isOpen: boolean;
+  };
   closeDialog: () => void;
-  dailyData?: Omit<StartNewDaily, "isPastDate">;
 };
 
-export const ManagerDialogs = ({
-  type,
-  dailyData,
-  isOpen,
-  closeDialog,
-}: Props) => {
+export const ManagerDialogs = ({ dialogState, closeDialog }: Props) => {
+  const { isOpen, params } = dialogState;
+  const { data, isLoading } = useQuery({
+    queryKey: ["details_daily"],
+    queryFn: async () => {
+      const response = await fetch(
+        `/api/daily?byDay=${format(new Date(dialogState.params.date as Date), "yyyy-MM-dd")}`,
+      );
+      if (response.ok) {
+        const parsed = await response.json();
+        const { data, status } = parsed;
+
+        return { daily: data, status };
+      }
+
+      return null;
+    },
+    enabled: true,
+  });
+  const isThisDateToday = isToday(params.date as Date);
+
+  console.log("DATA", data);
+  if (isThisDateToday && !data?.daily && data?.status === 404 && !isLoading) {
+    return (
+      <NewDailyDialog
+        date={params.date as Date}
+        isOpen={isOpen}
+        closeDialog={closeDialog}
+      />
+    );
+  }
   return (
     <>
-      {type === "new" && dailyData && dailyData.day && dailyData.begin && (
-        <NewDailyDialog
-          data={{ day: dailyData.day, begin: dailyData.begin }}
+      {data && !isLoading && (
+        <DetailsDailyDialog
+          daily={data.daily as Daily | null}
+          date={dialogState.params.date as Date}
           isOpen={isOpen}
           closeDialog={closeDialog}
         />
-      )}
-      {type === "details" && (
-        <DetailsDailyDialog isOpen={isOpen} closeDialog={closeDialog} />
       )}
     </>
   );

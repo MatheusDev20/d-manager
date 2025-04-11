@@ -1,3 +1,4 @@
+import { Daily } from "@/app/@types";
 import {
   Dialog,
   DialogContent,
@@ -5,14 +6,17 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+
 import React from "react";
 
 type Props = {
   isOpen: boolean;
   closeDialog: () => void;
+  daily: Daily | null;
+  date: Date;
 };
 
-export const DetailsDailyDialog = ({ isOpen, closeDialog }: Props) => {
+export const DetailsDailyDialog = ({ isOpen, daily, closeDialog }: Props) => {
   return (
     <Dialog onOpenChange={closeDialog} open={isOpen}>
       <DialogContent className="p-6 rounded-lg">
@@ -24,7 +28,17 @@ export const DetailsDailyDialog = ({ isOpen, closeDialog }: Props) => {
             asChild
             className="text-sm flex items-center justify-center text-gray-400 mb-6"
           >
-            <div>Você já realizou essa Daily, clique para ver detalhes</div>
+            {!daily ? (
+              <p>
+                Não foram encontradas informações para a daily do dia
+                selecionado!
+              </p>
+            ) : (
+              <div className="flex gap-3 flex-col">
+                <p>Você já realizou essa Daily!</p>
+                <p className="text-green-300">DailyID : {daily.id}</p>
+              </div>
+            )}
           </DialogDescription>
         </DialogHeader>
       </DialogContent>

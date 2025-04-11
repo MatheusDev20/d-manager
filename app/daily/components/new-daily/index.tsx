@@ -12,9 +12,9 @@ import { Input } from "@/components/ui/input";
 import { AppSelect } from "../../../components/select/app-select";
 import { Developer } from "@/app/@types";
 import { Button } from "@/components/ui/button";
-import { create } from "@/app/server-actions/developers";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { createNewTaks } from "@/app/server-actions/developers";
 
 type Props = {
   isOpen: boolean;
@@ -63,7 +63,11 @@ const PendencyForm = ({
   });
 
   const submitForm = async (devId: number, formState: Form) => {
-    await create({ devId, formData: { ...formState, status: "Pending" } });
+    await createNewTaks({
+      devId,
+      formData: { ...formState, status: "Pending" },
+    });
+
     queryClient.invalidateQueries({ queryKey: ["developers"] });
 
     closeDialog();

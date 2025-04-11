@@ -21,8 +21,10 @@ import { useQueryClient } from "@tanstack/react-query";
 
 type Props = {
   developers: Developer[];
+  tasksCreated: number;
+  setTaksCreated: React.Dispatch<React.SetStateAction<number>>;
 };
-export const Team = ({ developers }: Props) => {
+export const Team = ({ developers, setTaksCreated }: Props) => {
   const queryClient = useQueryClient();
   const [newPendecy, setNewPendecy] = React.useState({
     openModal: false,
@@ -31,6 +33,7 @@ export const Team = ({ developers }: Props) => {
 
   const addNewPendecy = (developer: Developer) => {
     setNewPendecy({ openModal: true, developer });
+    setTaksCreated((prev) => prev + 1);
   };
 
   const markAsSolved = async (taskId: string) => {

@@ -2,45 +2,30 @@
 import { useState } from "react";
 import { AppCalendar } from "../app-calendar";
 import { ManagerDialogs } from "../dialogs/manager";
-import { StartNewDaily } from "@/app/page";
 import { DeveloperProvider } from "@/app/context/developers";
 
 export const HomeCalendar = () => {
   const [dialogState, setDialogState] = useState<{
-    type: "new" | "details" | null;
-    open: boolean;
-  }>({ type: null, open: false });
+    isOpen: boolean;
+    params: { date: Date | null };
+  }>({ isOpen: false, params: { date: null } });
 
-  const [dailyData, setDailyData] = useState<Omit<StartNewDaily, "isPastDate">>(
-    {
-      day: null,
-      begin: null,
-    },
-  );
-
-  const newDaily = (data: StartNewDaily) => {
-    const { isPastDate } = data;
-    if (isPastDate) {
-      setDialogState({ type: "details", open: true });
-      return;
-    }
-    setDailyData(data);
-    setDialogState({ type: "new", open: true });
+  const newDaily = async (date: Date) => {
+    setDialogState({
+      isOpen: true,
+      params: { date: date as Date },
+    });
   };
 
-  const closeDialog = () => setDialogState({ type: null, open: false });
+  const closeDialog = () =>
+    setDialogState({ isOpen: false, params: { date: null } });
 
   return (
     <DeveloperProvider>
       <div className="border flex w-full p-4 h-screen flex-col items-center">
         <AppCalendar startNewDaily={newDaily} />
-        {dialogState.type && (
-          <ManagerDialogs
-            type={dialogState.type}
-            isOpen={dialogState.open}
-            closeDialog={closeDialog}
-            dailyData={dailyData}
-          />
+        {dialogState.params.date && (
+          <ManagerDialogs dialogState={dialogState} closeDialog={closeDialog} />
         )}
       </div>
     </DeveloperProvider>
