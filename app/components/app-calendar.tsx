@@ -6,14 +6,20 @@ type Props = {
   startNewDaily: (date: Date) => void;
 };
 export const AppCalendar = ({ startNewDaily }: Props) => {
-  const handleDateClick = (date: Date) => startNewDaily(date);
+  const handleDateClick = (date: Date) => {
+    startNewDaily(date);
+  };
 
   return (
-    <Calendar
-      locale={ptBR}
-      disabled={(date) => date > new Date()}
-      onDayClick={handleDateClick}
-      className="rounded-md border"
-    />
+    <div className="flex justify-center">
+      <Calendar
+        locale={ptBR}
+        disabled={(date) => date > new Date()}
+        selected={new Date()}
+        onDayClick={handleDateClick}
+        // onDayClick={handleDateClick}
+        className="rounded-md border"
+      />
+    </div>
   );
 };

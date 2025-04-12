@@ -40,8 +40,8 @@ export default function RootLayout({
         >
           <SidebarProvider>
             <AppSidebar />
-            <main className="flex-1 border">
-              <header className="flex  w-full items-center justify-between border-b p-4">
+            <main className="flex-1 max-w-screen overflow-hidden">
+              <header className="flex w-full items-center justify-between border-b p-4">
                 <SidebarTrigger />
                 <ModeToggle />
               </header>
