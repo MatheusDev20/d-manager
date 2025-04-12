@@ -1,10 +1,11 @@
 "use client";
-import { useState } from "react";
-import { AppCalendar } from "../app-calendar";
-import { ManagerDialogs } from "../dialogs/manager";
-import { DeveloperProvider } from "@/app/context/developers";
 
-export const HomeCalendar = () => {
+import { useState } from "react";
+import { AppCalendar } from "../components/app-calendar";
+import { ManagerDialogs } from "../components/dialogs/manager";
+import { DeveloperProvider } from "../context/developers";
+
+export default function Page() {
   const [dialogState, setDialogState] = useState<{
     isOpen: boolean;
     params: { date: Date | null };
@@ -30,4 +31,4 @@ export const HomeCalendar = () => {
       </div>
     </DeveloperProvider>
   );
-};
+}

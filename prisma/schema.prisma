@@ -12,7 +12,7 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  // directUrl = env("DIRECT_URL")
 }
 
 
@@ -49,4 +49,25 @@ model Dailys {
   day String
   wasFinishedInTime Boolean
   durationInMinutes Int
+}
+
+model Users {
+  @@map("users")
+  id      String   @id @default(cuid())
+  email   String   @unique
+  password String
+  organization ORG @relation(fields: [organizationId], references: [id])
+  organizationId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ORG {
+  @@map("organizations")
+  id        String   @id @default(cuid())
+  name      String
+  picture   String @db.VarChar(255)
+  users Users[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

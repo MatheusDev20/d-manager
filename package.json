@@ -11,7 +11,7 @@
     "start": "next start",
     "vercel-build": "prisma generate && prisma migrate deploy && next build",
     "lint": "next lint",
-    "db:seed": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/seed.ts",
+    "db:seed": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/seeds/seed-user.ts",
     "postinstall": "prisma generate"
   },
   "dependencies": {
@@ -34,6 +34,7 @@
     "eslint-plugin-prettier": "^5.2.6",
     "lucide-react": "^0.487.0",
     "next": "15.2.4",
+    "next-auth": "^4.24.11",
     "next-themes": "^0.4.6",
     "prisma": "^6.5.0",
     "react": "^19.0.0",

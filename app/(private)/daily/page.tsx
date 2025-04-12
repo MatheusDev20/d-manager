@@ -12,14 +12,16 @@ import { Team } from "./components/team";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState, useRef } from "react";
-import { TableSkeleton } from "../components/table/skeleton";
+
 import { Clock } from "lucide-react";
-import { finishDaily } from "../server-actions/dailys";
-import { Daily } from "../@types";
+
 import { v4 } from "uuid";
 import { toast } from "sonner";
 import { redirect } from "next/navigation";
-import { LoadingProgressDialog } from "../components/dialogs/loading";
+import { TableSkeleton } from "@/app/components/table/skeleton";
+import { Daily } from "@/app/@types";
+import { finishDaily } from "@/app/server-actions/dailys";
+import { LoadingProgressDialog } from "@/app/components/dialogs/loading";
 
 export default function Page() {
   const initialDate = useRef(new Date()).current;

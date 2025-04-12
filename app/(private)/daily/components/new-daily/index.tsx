@@ -9,12 +9,12 @@ import {
 } from "@/components/ui/dialog";
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
-import { AppSelect } from "../../../components/select/app-select";
 import { Developer } from "@/app/@types";
 import { Button } from "@/components/ui/button";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { createNewTaks } from "@/app/server-actions/developers";
+import { AppSelect } from "@/app/components/select/app-select";
 
 type Props = {
   isOpen: boolean;

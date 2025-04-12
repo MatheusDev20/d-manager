@@ -20,6 +20,7 @@ export const ManagerDialogs = ({ dialogState, closeDialog }: Props) => {
       const response = await fetch(
         `/api/daily?byDay=${format(new Date(dialogState.params.date as Date), "yyyy-MM-dd")}`,
       );
+
       if (response.ok) {
         const parsed = await response.json();
         const { data, status } = parsed;
@@ -32,7 +33,6 @@ export const ManagerDialogs = ({ dialogState, closeDialog }: Props) => {
   });
   const isThisDateToday = isToday(params.date as Date);
 
-  console.log("DATA", data);
   if (isThisDateToday && !data?.daily && data?.status === 404 && !isLoading) {
     return (
       <NewDailyDialog
