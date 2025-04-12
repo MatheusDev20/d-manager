@@ -16,6 +16,7 @@ export const AppCalendar = ({ startNewDaily }: Props) => {
   }, []);
 
   const handleDateClick = (date: Date) => {
+    console.log("Data", date);
     startNewDaily(date);
   };
 
