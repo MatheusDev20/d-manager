@@ -16,7 +16,7 @@ const eslintConfig = [
   {
     ignores: [
       "node_modules/**",
-      "app/generated",
+      "src/app/generated",
       ".next/**",
       "build/**",
       "dist/**",
