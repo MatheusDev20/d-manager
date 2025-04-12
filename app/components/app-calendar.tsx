@@ -1,6 +1,6 @@
+"use client";
 import React from "react";
 import { Calendar } from "@/components/ui/calendar";
-// import { ptBR } from "date-fns/locale/pt-BR";
 
 type Props = {
   startNewDaily: (date: Date) => void;

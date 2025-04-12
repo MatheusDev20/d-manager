@@ -1,3 +1,4 @@
+"use client";
 import { HomeCalendar } from "./components/home-calendar";
 
 export type StartNewDaily = {
@@ -6,6 +7,6 @@ export type StartNewDaily = {
   isPastDate: boolean;
 };
 
-export default async function Home() {
+export default function Home() {
   return <HomeCalendar />;
 }
