@@ -13,7 +13,7 @@ export const AppCalendar = ({ startNewDaily }: Props) => {
   return (
     <div className="flex justify-center">
       <Calendar
-        timeZone="-03:00"
+        timeZone="America/Sao_Paulo"
         disabled={(date) => date > new Date()}
         onDayClick={handleDateClick}
         // onDayClick={handleDateClick}
