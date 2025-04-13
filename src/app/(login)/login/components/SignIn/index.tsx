@@ -17,11 +17,11 @@ export const SignIn = () => {
           onClick={() => login()}
         >
           <GithubIcon tClass="h-7 w-7" />
-          <span className="text-lg font-medium">Continue with GitHub</span>
+          <span className="text-lg font-medium">Entrar com github</span>
         </Button>
 
         <p className="mt-6 text-gray-400 text-sm text-center">
-          We may support other login providers and methods in the future
+          Outros métodos de autenticação serão suportados em breve.
         </p>
       </div>
     </div>
