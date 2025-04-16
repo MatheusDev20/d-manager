@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import { Daily } from "../@types";
+import { Daily } from "../../@types";
 
 type FetchDailyFilter = {
   date: Date;

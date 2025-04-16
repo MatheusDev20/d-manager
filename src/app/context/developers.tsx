@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useReducer, ReactNode } from "react";
-import { Developer } from "@/src/app/@types";
+import { Developer } from "@/src/@types";
 
 type DeveloperState = {
   developers: Developer[];

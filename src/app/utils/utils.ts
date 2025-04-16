@@ -1,4 +1,4 @@
-import { TaskPriority } from "@/src/app/@types";
+import { TaskPriority } from "@/src/@types";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 

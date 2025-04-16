@@ -2,7 +2,7 @@ import { isToday } from "date-fns";
 import { DetailsDailyDialog } from "./daily-details-dialog";
 import { NewDailyDialog } from "./new-daily-dialog";
 import { useQuery } from "@tanstack/react-query";
-import { Daily } from "@/src/app/@types";
+import { Daily } from "@/src/@types";
 import { fetchDaily } from "../../server/daily";
 
 type Props = {

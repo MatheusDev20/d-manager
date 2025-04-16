@@ -1,7 +1,7 @@
 "use server";
 
 import { addNewDeveloperTask } from "@/src/lib/db/developers";
-import { TaskStatus } from "../../@types";
+import { TaskStatus } from "../../../@types";
 
 export type NewTask = {
   description: string;

@@ -17,7 +17,7 @@ import { BadgeCheck, Pencil, PlusIcon, Trash2 } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import { NewPendecy } from "../new-daily";
-import { Developer } from "@/src/app/@types";
+import { Developer } from "@/src/@types";
 import { AppTooltip } from "@/src/app/components/tooltip";
 import { doneTask } from "@/src/app/server/actions/tasks";
 import { toast } from "sonner";

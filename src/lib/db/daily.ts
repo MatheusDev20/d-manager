@@ -1,7 +1,7 @@
 "use server";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Daily } from "@/src/app/@types";
+import { Daily } from "@/src/@types";
 import prisma from "@/src/lib/prisma";
 
 export const create = async (daily: Daily) => {

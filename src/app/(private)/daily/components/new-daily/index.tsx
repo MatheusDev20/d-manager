@@ -9,7 +9,7 @@ import {
 } from "@/src/lib/shadcdn/components/ui/dialog";
 import React, { useState } from "react";
 import { Input } from "@/src/lib/shadcdn/components/ui/input";
-import { Developer } from "@/src/app/@types";
+import { Developer } from "@/src/@types";
 import { Button } from "@/src/lib/shadcdn/components/ui/button";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";

@@ -1,4 +1,4 @@
-import { Daily } from "@/src/app/@types";
+import { Daily } from "@/src/@types";
 import {
   Dialog,
   DialogContent,

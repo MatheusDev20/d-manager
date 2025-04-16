@@ -19,7 +19,7 @@ import { v4 } from "uuid";
 import { toast } from "sonner";
 import { redirect } from "next/navigation";
 import { TableSkeleton } from "@/src/app/components/table/skeleton";
-import { Daily } from "@/src/app/@types";
+import { Daily } from "@/src/@types";
 import { finishDaily } from "@/src/app/server/actions/dailys";
 import { LoadingProgressDialog } from "@/src/app/components/dialogs/loading";
 

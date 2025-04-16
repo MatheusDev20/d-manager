@@ -1,4 +1,4 @@
-import { Developer } from "@/src/app/@types";
+import { Developer } from "@/src/@types";
 import {
   Table,
   TableBody,
