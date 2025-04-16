@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { createUser, findByMail } from "@/src/data";
 import { failed, ok } from "@/src/lib/api-response";
-import { createUser, findByMail } from "@/src/lib/db/users";
 
 export async function GET(request: Request) {
   const url = new URL(request.url);

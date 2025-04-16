@@ -4,7 +4,7 @@
 import { Daily } from "@/src/@types";
 import prisma from "@/src/lib/prisma";
 
-export const create = async (daily: Daily) => {
+export const saveDaily = async (daily: Daily) => {
   try {
     await prisma.dailys.create({
       data: daily,

@@ -1,4 +1,4 @@
-import { getByCalendarDay } from "@/src/lib/db/daily";
+import { getByCalendarDay } from "@/src/data";
 
 export async function GET(request: Request) {
   const url = new URL(request.url);

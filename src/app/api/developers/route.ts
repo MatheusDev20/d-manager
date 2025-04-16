@@ -1,4 +1,4 @@
-import { list } from "@/src/lib/db/developers";
+import { list } from "@/src/data";
 
 export async function GET(request: Request) {
   const url = new URL(request.url);
