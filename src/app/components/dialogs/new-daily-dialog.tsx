@@ -6,10 +6,10 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/src/components/ui/dialog";
+} from "@/src/lib/shadcdn/components/ui/dialog";
 import React from "react";
 
-import { Button } from "@/src/components/ui/button";
+import { Button } from "@/src/lib/shadcdn/components/ui/button";
 import { redirect } from "next/navigation";
 import { v4 } from "uuid";
 

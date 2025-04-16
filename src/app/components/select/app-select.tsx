@@ -8,7 +8,7 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/src/components/ui/select";
+} from "@/src/lib/shadcdn/components/ui/select";
 
 type Props = {
   options: { value: string; label: string }[];

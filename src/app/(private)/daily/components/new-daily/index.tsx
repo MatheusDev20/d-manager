@@ -6,14 +6,14 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/src/components/ui/dialog";
+} from "@/src/lib/shadcdn/components/ui/dialog";
 import React, { useState } from "react";
-import { Input } from "@/src/components/ui/input";
+import { Input } from "@/src/lib/shadcdn/components/ui/input";
 import { Developer } from "@/src/app/@types";
-import { Button } from "@/src/components/ui/button";
+import { Button } from "@/src/lib/shadcdn/components/ui/button";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { createNewTaks } from "@/src/app/server-actions/developers";
+import { createNewTaks } from "@/src/app/server/actions/developers";
 import { AppSelect } from "@/src/app/components/select/app-select";
 
 type Props = {

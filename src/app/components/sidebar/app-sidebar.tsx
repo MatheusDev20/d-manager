@@ -11,7 +11,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/src/components/ui/sidebar";
+} from "@/src/lib/shadcdn/components/ui/sidebar";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
@@ -49,7 +49,7 @@ export function AppSidebar() {
           <SidebarGroupContent className="mt-6">
             <SidebarMenu>
               {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
+                <SidebarMenuItem className="cursor-pointer" key={item.title}>
                   <SidebarMenuButton asChild>
                     <a onClick={() => router.push(item.url)}>
                       <item.icon />

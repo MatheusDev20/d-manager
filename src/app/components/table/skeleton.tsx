@@ -1,4 +1,4 @@
-import { Skeleton } from "@/src/components/ui/skeleton";
+import { Skeleton } from "@/src/lib/shadcdn/components/ui/skeleton";
 
 export const TableSkeleton = () => {
   return (

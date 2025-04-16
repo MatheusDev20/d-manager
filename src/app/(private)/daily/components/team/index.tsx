@@ -1,6 +1,6 @@
 "use client";
-import { Badge } from "@/src/components/ui/badge";
-import { Button } from "@/src/components/ui/button";
+import { Badge } from "@/src/lib/shadcdn/components/ui/badge";
+import { Button } from "@/src/lib/shadcdn/components/ui/button";
 import {
   pickPriorityColor,
   pickPriorityVariant,
@@ -11,7 +11,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/src/components/ui/accordion";
+} from "@/src/lib/shadcdn/components/ui/accordion";
 
 import { BadgeCheck, Pencil, PlusIcon, Trash2 } from "lucide-react";
 import Image from "next/image";
@@ -19,7 +19,7 @@ import React from "react";
 import { NewPendecy } from "../new-daily";
 import { Developer } from "@/src/app/@types";
 import { AppTooltip } from "@/src/app/components/tooltip";
-import { doneTask } from "@/src/app/server-actions/tasks";
+import { doneTask } from "@/src/app/server/actions/tasks";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
 

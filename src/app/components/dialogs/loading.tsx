@@ -1,11 +1,11 @@
-import { DialogHeader } from "@/src/components/ui/dialog";
+import { DialogHeader } from "@/src/lib/shadcdn/components/ui/dialog";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogTitle,
-} from "@/src/components/ui/dialog";
-import { Progress } from "@/src/components/ui/progress";
+} from "@/src/lib/shadcdn/components/ui/dialog";
+import { Progress } from "@/src/lib/shadcdn/components/ui/progress";
 
 type Props = {
   isOpen: boolean;

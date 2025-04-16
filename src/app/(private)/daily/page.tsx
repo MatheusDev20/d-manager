@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import { Input } from "@/src/components/ui/input";
+import { Input } from "@/src/lib/shadcdn/components/ui/input";
 import {
   add,
   format,
@@ -10,7 +10,7 @@ import {
 } from "date-fns";
 import { Team } from "./components/team";
 import { useQuery } from "@tanstack/react-query";
-import { Button } from "@/src/components/ui/button";
+import { Button } from "@/src/lib/shadcdn/components/ui/button";
 import { useEffect, useState, useRef } from "react";
 
 import { Clock } from "lucide-react";
@@ -20,7 +20,7 @@ import { toast } from "sonner";
 import { redirect } from "next/navigation";
 import { TableSkeleton } from "@/src/app/components/table/skeleton";
 import { Daily } from "@/src/app/@types";
-import { finishDaily } from "@/src/app/server-actions/dailys";
+import { finishDaily } from "@/src/app/server/actions/dailys";
 import { LoadingProgressDialog } from "@/src/app/components/dialogs/loading";
 
 export default function Page() {

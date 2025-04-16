@@ -1,3 +1,5 @@
+"use server";
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Daily } from "@/src/app/@types";
 import prisma from "@/src/lib/prisma";

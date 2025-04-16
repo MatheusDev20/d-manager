@@ -1,7 +1,9 @@
+"use server";
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { Developer } from "@/src/app/@types";
 import { PendingTasks } from "@/src/app/generated/prisma";
-import { NewTask } from "@/src/app/server-actions/developers";
+import { NewTask } from "@/src/app/server/actions/developers";
 import prisma from "@/src/lib/prisma";
 import { cache } from "react";
 

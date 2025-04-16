@@ -45,3 +45,8 @@ export function pickPriorityVariant(priority: TaskPriority): {
 export const timeout = async (ms: number): Promise<void> => {
   await new Promise((resolve) => setTimeout(resolve, ms));
 };
+
+export const isEmailValid = (email: string) => {
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return re.test(email);
+};

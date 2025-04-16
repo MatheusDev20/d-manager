@@ -5,7 +5,7 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/src/components/ui/dialog";
+} from "@/src/lib/shadcdn/components/ui/dialog";
 
 import React from "react";
 
@@ -22,7 +22,7 @@ export const DetailsDailyDialog = ({ isOpen, daily, closeDialog }: Props) => {
       <DialogContent className="p-6 rounded-lg">
         <DialogHeader>
           <DialogTitle className="text-2xl self-center font-bold mb-4">
-            DailyRealizada
+            {!daily ? "Não encontrada" : "Daily já realizada"}
           </DialogTitle>
           <DialogDescription
             asChild

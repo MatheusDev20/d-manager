@@ -7,7 +7,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/src/components/ui/table";
+} from "@/src/lib/shadcdn/components/ui/table";
 import { CircleMinus } from "lucide-react";
 import Image from "next/image";
 

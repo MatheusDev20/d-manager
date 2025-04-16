@@ -55,6 +55,7 @@ model Users {
   @@map("users")
   id      String   @id @default(cuid())
   email   String   @unique
+  name    String
   password String
   organization ORG @relation(fields: [organizationId], references: [id])
   organizationId String

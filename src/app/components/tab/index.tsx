@@ -3,7 +3,7 @@ import {
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "@/src/components/ui/tabs";
+} from "@/src/lib/shadcdn/components/ui/tabs";
 
 export const AppTab = () => {
   return (

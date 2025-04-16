@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Calendar } from "@/src/components/ui/calendar";
+import { Calendar } from "@/src/lib/shadcdn/components/ui/calendar";
 
 type Props = {
   startNewDaily: (date: Date) => void;

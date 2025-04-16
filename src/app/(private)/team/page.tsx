@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 
-import { list } from "@/src/lib/db";
 import { AppTable } from "@/src/app/components/table";
+import { list } from "@/src/lib/db/developers";
 
 export default async function Page() {
   const developers = await list({ bringTasks: false });
