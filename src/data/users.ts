@@ -19,7 +19,11 @@ export async function findByMail(email: string): Promise<AppUser | null> {
 
     if (!user) return null;
     // Assuming AppUser contains at least id and organization
-    return { id: user.id, organization: user.organization } as AppUser;
+    return {
+      id: user.id,
+      organization: user.organization,
+      password: user.password,
+    } as AppUser;
   } catch (err: any) {
     console.error(err);
     throw new Error("DB Find user error");

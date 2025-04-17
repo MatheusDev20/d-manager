@@ -1,6 +1,7 @@
 "use client";
 
 import { AppInput } from "@/src/app/components/input";
+import { LoadingSpinner } from "@/src/app/components/spinner";
 import { signin } from "@/src/app/server/actions/auth";
 import { isEmailValid } from "@/src/app/utils/utils";
 import { Button } from "@/src/lib/shadcdn/components/ui/button";
@@ -12,13 +13,18 @@ import {
   CardHeader,
   CardTitle,
 } from "@/src/lib/shadcdn/components/ui/card";
-import { useState } from "react";
+import { useActionState, useEffect, useState } from "react";
+import { toast } from "sonner";
 
 type Props = {
   setFormType: (type: "signIn" | "signUp") => void;
 };
 
 export const SignIn = ({ setFormType }: Props) => {
+  const [state, action, pending] = useActionState(signin, {
+    errors: { message: "" },
+  });
+
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
@@ -49,9 +55,17 @@ export const SignIn = ({ setFormType }: Props) => {
     );
   };
 
+  useEffect(() => {
+    if (state?.errors && state.errors.message)
+      toast.error("Email não encontrado!", {
+        position: "top-right",
+        richColors: true,
+      });
+  }, [state]);
+
   return (
     <form
-      action={signin}
+      action={action}
       className="flex items-center justify-center flex-col h-screen bg-gradient-to-b"
     >
       <Card className="min-w-[520px] flex flex-col bg-gray-800/40 backdrop-blur-sm border border-gray-700 shadow-xl p-8">
@@ -89,12 +103,12 @@ export const SignIn = ({ setFormType }: Props) => {
               disabled={isFormValid()}
               type="submit"
             >
-              Entrar
+              {pending ? <LoadingSpinner sizeClass="h-4 w-4" /> : "Entrar"}
             </Button>
             <CardFooter className="flex pl-0 pr-0 pt-2 pb-2 items-center">
               <a
                 onClick={() => setFormType("signUp")}
-                className="text-[14px] cursor-pointer text-blue-400"
+                className="text-[14px] cursor-pointer text-blue-300"
               >
                 Criar conta
               </a>
