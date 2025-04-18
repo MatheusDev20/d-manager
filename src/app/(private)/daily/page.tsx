@@ -13,7 +13,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/src/lib/shadcdn/components/ui/button";
 import { useEffect, useState, useRef } from "react";
 
-import { Clock } from "lucide-react";
+import { Clock, PauseIcon } from "lucide-react";
 
 import { v4 } from "uuid";
 import { toast } from "sonner";
@@ -22,6 +22,7 @@ import { TableSkeleton } from "@/src/app/components/table/skeleton";
 import { Daily } from "@/src/@types";
 import { finishDaily } from "@/src/app/server/actions/dailys";
 import { LoadingProgressDialog } from "@/src/app/components/dialogs/loading";
+import { Resume } from "../../components/icons/resume";
 
 export default function Page() {
   const initialDate = useRef(new Date()).current;
@@ -168,22 +169,47 @@ export default function Page() {
                 isTimeAlmostUp ? "text-red-500 animate-pulse" : ""
               }`}
             >
-              {formattedRemainingTime}
+              <span
+                className={`${isRunning ? "text-white" : "text-yellow-400"}`}
+              >
+                {formattedRemainingTime}
+              </span>
             </div>
           </div>
 
-          <Button
-            className="self-center cursor-pointer text-white ml-2 font-medium bg-secondary"
+          <div
+            className="flex items-center gap-1 self-center cursor-pointer ml-3 px-3 py-1 hover:bg-gray-800/30 rounded-md transition-all duration-200 group"
             onClick={() => setIsRunning(!isRunning)}
           >
-            {isRunning ? "Pausar" : "Retomar"}
+            {isRunning ? (
+              <div className="flex gap-1 items-center">
+                <PauseIcon />
+                <span className="font-medium text-white group-hover:text-yellow-400 transition-colors">
+                  Pausar
+                </span>
+              </div>
+            ) : (
+              <div className="flex gap-1 items-center">
+                <Resume />
+                <span className="font-medium text-yellow-400 group-hover:text-green-400 transition-colors">
+                  Retomar
+                </span>
+              </div>
+            )}
+          </div>
+
+          <Button
+            onClick={finish}
+            className="cursor-pointer font-medium text-black bg-sidebar-foreground ml-auto"
+          >
+            Finalizar
           </Button>
 
           <Button
             onClick={finish}
-            className="self-center cursor-pointer font-medium text-black bg-sidebar-foreground ml-auto"
+            className="cursor-pointer font-medium text-black bg-destructive hover:bg-chart-5 ml-4"
           >
-            Finalizar
+            Cancelar
           </Button>
         </header>
 

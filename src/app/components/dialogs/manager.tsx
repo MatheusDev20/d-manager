@@ -1,9 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { isToday } from "date-fns";
 import { DetailsDailyDialog } from "./daily-details-dialog";
 import { NewDailyDialog } from "./new-daily-dialog";
 import { useQuery } from "@tanstack/react-query";
 import { Daily } from "@/src/@types";
 import { fetchDaily } from "../../server/daily";
+import { useEffect } from "react";
 
 type Props = {
   dialogState: {
@@ -11,9 +13,14 @@ type Props = {
     isOpen: boolean;
   };
   closeDialog: () => void;
+  setLoading: (b: boolean) => void;
 };
 
-export const ManagerDialogs = ({ dialogState, closeDialog }: Props) => {
+export const ManagerDialogs = ({
+  dialogState,
+  closeDialog,
+  setLoading,
+}: Props) => {
   const { isOpen, params } = dialogState;
 
   const { data, isLoading } = useQuery({
@@ -21,6 +28,11 @@ export const ManagerDialogs = ({ dialogState, closeDialog }: Props) => {
     queryFn: async () => await fetchDaily({ date: params.date as Date }),
     enabled: true,
   });
+
+  useEffect(() => {
+    if (isLoading) setLoading(true);
+    else setLoading(false);
+  }, [isLoading]);
 
   const isThisDateToday = isToday(params.date as Date);
 

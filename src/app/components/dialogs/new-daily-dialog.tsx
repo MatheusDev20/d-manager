@@ -24,6 +24,7 @@ export const NewDailyDialog = ({ isOpen, closeDialog }: Props) => {
     const id = v4();
     redirect(`/daily?id=${id}`);
   };
+
   return (
     <Dialog onOpenChange={closeDialog} open={isOpen}>
       <DialogContent className="p-6 rounded-lg">
