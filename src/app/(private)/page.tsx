@@ -21,7 +21,6 @@ export default function Page() {
 
   const closeDialog = () =>
     setDialogState({ isOpen: false, params: { date: null } });
-
   return (
     <DeveloperProvider>
       <div className="flex w-full p-4 h-screen flex-col items-center">

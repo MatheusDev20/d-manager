@@ -21,8 +21,10 @@ export async function findByMail(email: string): Promise<AppUser | null> {
     // Assuming AppUser contains at least id and organization
     return {
       id: user.id,
+      name: user.name,
       organization: user.organization,
       password: user.password,
+      avatarUrl: user.picture ?? "",
     } as AppUser;
   } catch (err: any) {
     console.error(err);

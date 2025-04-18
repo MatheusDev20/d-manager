@@ -57,6 +57,7 @@ model Users {
   email   String   @unique
   name    String
   password String
+  picture String? @db.VarChar(255)
   organization ORG @relation(fields: [organizationId], references: [id])
   organizationId String
   createdAt DateTime @default(now())

@@ -12,6 +12,9 @@ import { ModeToggle } from "../components/toggle-theme";
 
 import { Avatar } from "@/src/lib/shadcdn/components/ui/avatar";
 import { AvatarImage } from "@radix-ui/react-avatar";
+import { getIronSession } from "iron-session";
+import { cookies } from "next/headers";
+import { SessionData } from "@/src/lib/iron-session";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,7 +36,15 @@ export default async function AppLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // const session = await auth();
+  async function getIronSessionData() {
+    const session = await getIronSession<SessionData>(await cookies(), {
+      cookieName: "d-manager-session",
+      password: process.env.SESSION_SECRET as string,
+    });
+    return session;
+  }
+
+  const session = await getIronSessionData();
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -54,10 +65,11 @@ export default async function AppLayout({
                 <div className="flex gap-8 items-center">
                   <Avatar>
                     <AvatarImage
-                      // src={session?.user?.image ?? ""}
+                      src={session?.user.avatarUrl ?? ""}
                       alt="avatar"
                     />
                   </Avatar>
+                  <p className="font-bold">{session.user.name}</p>
                   <ModeToggle />
                 </div>
               </header>
