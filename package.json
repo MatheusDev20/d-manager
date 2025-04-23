@@ -11,6 +11,7 @@
     "start": "next start",
     "vercel-build": "prisma generate && prisma migrate deploy && next build",
     "lint": "next lint",
+    "postbuild": "find .vercel/output/functions -type d -path '*/node_modules/@prisma/client' -exec cp node_modules/prisma/client/libquery_engine-rhel-openssl-3.0.x.so.node {}/ \\;",
     "db:seed": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/seeds/seed-user.ts",
     "postinstall": "prisma generate"
   },
