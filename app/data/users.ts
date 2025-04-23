@@ -2,7 +2,7 @@
 "use server";
 
 import { encryptPassword } from "../lib/bcrypt";
-import prisma from "../lib/prisma";
+import prisma from "@/app/lib/prisma";
 import { AppUser } from "../lib/types";
 
 /**
