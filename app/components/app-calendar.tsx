@@ -8,9 +8,7 @@ type Props = {
 };
 
 export const AppCalendar = ({ startNewDaily }: Props) => {
-  // Use state to ensure component only renders after mounting
   const [mounted, setMounted] = useState(false);
-
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -18,10 +16,7 @@ export const AppCalendar = ({ startNewDaily }: Props) => {
   const handleDateClick = (date: Date) => {
     startNewDaily(date);
   };
-
-  // Don't render until client-side
   if (!mounted) return null;
-
   return (
     <div className="flex justify-center">
       <Calendar

@@ -58,14 +58,14 @@ export default async function AppLayout({
           disableTransitionOnChange
         >
           <SidebarProvider>
-            <AppSidebar />
+            <AppSidebar organization={session.user.organization} />
             <main className="flex-1 max-w-screen overflow-hidden">
               <header className="flex w-full items-center justify-between border-b p-4">
                 <SidebarTrigger />
                 <div className="flex gap-8 items-center">
                   <Avatar>
                     <AvatarImage
-                      src={session?.user.avatarUrl ?? ""}
+                      src={session.user.avatarUrl ?? ""}
                       alt="avatar"
                     />
                   </Avatar>

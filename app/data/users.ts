@@ -18,7 +18,6 @@ export async function findByMail(email: string): Promise<AppUser | null> {
     });
 
     if (!user) return null;
-    // Assuming AppUser contains at least id and organization
     return {
       id: user.id,
       name: user.name,
@@ -38,14 +37,11 @@ export async function findByMail(email: string): Promise<AppUser | null> {
  */
 export async function createUser(data: any): Promise<void> {
   const { organizationId, password, ...userData } = data;
-
-  // Check the organization exists first
   const org = await prisma.oRG.findUnique({
     where: { id: organizationId },
   });
   if (!org) throw new Error("Organization not found");
 
-  // Encrypt the password before saving to DB
   const hashed = await encryptPassword(password);
 
   try {

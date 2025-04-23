@@ -89,6 +89,9 @@ export default function Page() {
   const isTimeAlmostUp =
     remainingTime.minutes === 0 && remainingTime.seconds <= 30;
 
+  const cancelDaily = () => {
+    redirect("/");
+  };
   const finish = async () => {
     setLoading(true);
     let progressValue = 0;
@@ -206,7 +209,7 @@ export default function Page() {
           </Button>
 
           <Button
-            onClick={finish}
+            onClick={cancelDaily}
             className="cursor-pointer font-medium text-black bg-destructive hover:bg-chart-5 ml-4"
           >
             Cancelar

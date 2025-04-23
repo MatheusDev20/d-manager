@@ -57,7 +57,7 @@ export const SignIn = ({ setFormType }: Props) => {
 
   useEffect(() => {
     if (state?.errors && state.errors.message)
-      toast.error("Email não encontrado!", {
+      toast.error(state.errors.message, {
         position: "top-right",
         richColors: true,
       });
