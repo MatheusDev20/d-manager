@@ -6,6 +6,7 @@ type Props = {
   bg?: string;
   className?: string;
   checkError?: () => boolean;
+  width?: string;
   errorMsg?: string;
 } & React.ComponentProps<"input">;
 
@@ -14,10 +15,11 @@ export const AppInput = ({
   className,
   checkError,
   errorMsg,
+  width,
   ...rest
 }: Props) => {
   return (
-    <div className="flex flex-col space-y-1">
+    <div className={`flex flex-col space-y-1 ${width ?? ""}`}>
       <Input
         {...rest}
         bg={bg}

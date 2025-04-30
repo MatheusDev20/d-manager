@@ -38,15 +38,15 @@ export const NewDailyDialog = ({ isOpen, closeDialog }: Props) => {
           ></DialogDescription>
         </DialogHeader>
         <div className="flex justify-end gap-2">
-          <Button onClick={start} className="cursor-pointer">
-            Iniciar
-          </Button>
           <Button
             className="cursor-pointer "
             variant="ghost"
             onClick={closeDialog}
           >
             Cancelar
+          </Button>
+          <Button onClick={start} className="cursor-pointer">
+            Iniciar
           </Button>
         </div>
       </DialogContent>

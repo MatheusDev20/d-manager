@@ -14,8 +14,10 @@ type Props = {
   options: { value: string; label: string }[];
   groupLabel: string;
   defaultValue?: string;
+  className?: string;
   disabled?: boolean;
   name: string;
+  width?: string;
   placeholder?: string;
   onChange?: (value: string) => void;
 };
@@ -25,6 +27,8 @@ export function AppSelect(props: Props) {
   const [selectedValue, setSelectedValue] = React.useState<string>(
     defaultValue || "",
   );
+
+  const defaultBehaviour = !props.className ? "w-full mt-3" : props.className;
 
   const handleValueChange = (value: string) => {
     setSelectedValue(value);
@@ -37,7 +41,7 @@ export function AppSelect(props: Props) {
       value={selectedValue}
       onValueChange={handleValueChange}
     >
-      <SelectTrigger disabled={disabled} className="w-full mt-3">
+      <SelectTrigger disabled={disabled} className={defaultBehaviour}>
         <SelectValue placeholder={placeholder ?? "Placeholder"} />
       </SelectTrigger>
       <SelectContent>

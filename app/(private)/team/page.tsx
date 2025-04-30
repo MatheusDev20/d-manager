@@ -4,15 +4,14 @@ import { AppTable } from "@/app/components/table";
 import { list } from "@/app/data";
 
 export default async function Page() {
-  const developers = await list({ bringTasks: false });
+  const developers = await list({ bringTasks: true, taskStatus: "Pending" });
 
   return (
     <div className="p-6">
-      {/* <h1 className="text-2xl font-bold mb-4">Desenvolvedores</h1> */}
       <Suspense fallback={<p>Carregando</p>}>
         <AppTable
           caption="Desenvolvedores cadastrados"
-          head={["Nome", "Status", "Ações"]}
+          head={["Nome", "Status", "Pendências Cadastradas"]}
           values={developers}
         />
       </Suspense>

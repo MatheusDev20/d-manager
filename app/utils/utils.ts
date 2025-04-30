@@ -34,7 +34,7 @@ export function pickPriorityVariant(priority: TaskPriority): {
     case "high":
       return { type: "destructive", label: "Alta" };
     case "medium":
-      return { type: "outline", label: "Média" };
+      return { type: "secondary", label: "Média" };
     case "low":
       return { type: "success", label: "Baixa" };
     default:

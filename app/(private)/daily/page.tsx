@@ -2,18 +2,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { Input } from "@/app/lib/shadcdn/components/ui/input";
-import {
-  add,
-  format,
-  differenceInSeconds,
-  differenceInMinutes,
-} from "date-fns";
-import { Team } from "./components/team";
+import { add, format, differenceInMinutes } from "date-fns";
+import { DailyScreen } from "./components/daily-screen";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/app/lib/shadcdn/components/ui/button";
-import { useEffect, useState, useRef } from "react";
-
-import { Clock, PauseIcon } from "lucide-react";
+import { useState, useRef } from "react";
 
 import { v4 } from "uuid";
 import { toast } from "sonner";
@@ -22,51 +15,16 @@ import { TableSkeleton } from "@/app/components/table/skeleton";
 import { Daily } from "@/app/@types";
 import { finishDaily } from "@/app/server/actions/dailys";
 import { LoadingProgressDialog } from "@/app/components/dialogs/loading";
-import { Resume } from "../../components/icons/resume";
+import { CountdownTimer } from "./components/clock-timer";
 
 export default function Page() {
   const initialDate = useRef(new Date()).current;
   const endDate = useRef(add(initialDate, { minutes: 30 })).current;
 
-  const [remainingTime, setRemainingTime] = useState<{
-    minutes: number;
-    seconds: number;
-  }>({ minutes: 30, seconds: 0 });
-
-  const [isRunning, setIsRunning] = useState(true);
   const [finishedAfterCountdown, setFinishedAfterCountdown] = useState(false);
   const [tasksCreated, setTaksCreated] = useState(0);
   const [progress, setProgress] = useState(0);
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    if (!isRunning) return;
-
-    const calculateTime = () => {
-      const now = new Date();
-      const diffInSeconds = differenceInSeconds(endDate, now);
-      if (diffInSeconds <= 0) {
-        setFinishedAfterCountdown(true);
-        setRemainingTime({ minutes: 0, seconds: 0 });
-        setIsRunning(false);
-        return false;
-      }
-
-      const minutes = Math.floor(diffInSeconds / 60);
-      const seconds = diffInSeconds % 60;
-
-      setRemainingTime({ minutes, seconds });
-      return true;
-    };
-
-    if (!calculateTime()) return;
-
-    const timer = setInterval(() => {
-      calculateTime();
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [endDate, isRunning]);
 
   const { data, isLoading } = useQuery({
     queryKey: ["developers"],
@@ -82,13 +40,9 @@ export default function Page() {
 
   if (isLoading) return <TableSkeleton />;
 
-  const formattedRemainingTime = `${remainingTime.minutes
-    .toString()
-    .padStart(2, "0")}:${remainingTime.seconds.toString().padStart(2, "0")}`;
-
-  const isTimeAlmostUp =
-    remainingTime.minutes === 0 && remainingTime.seconds <= 30;
-
+  const handleTimerEnd = () => {
+    setFinishedAfterCountdown(true);
+  };
   const cancelDaily = () => {
     redirect("/");
   };
@@ -164,42 +118,8 @@ export default function Page() {
               value={format(endDate, "HH:mm")}
             />
           </div>
-
-          <div className="flex items-center gap-2  p-3 rounded-md">
-            <Clock className="h-5 w-5 text-gray-500" />
-            <div
-              className={`font-mono text-lg font-bold ${
-                isTimeAlmostUp ? "text-red-500 animate-pulse" : ""
-              }`}
-            >
-              <span
-                className={`${isRunning ? "text-white" : "text-yellow-400"}`}
-              >
-                {formattedRemainingTime}
-              </span>
-            </div>
-          </div>
-
-          <div
-            className="flex items-center gap-1 self-center cursor-pointer ml-3 px-3 py-1 hover:bg-gray-800/30 rounded-md transition-all duration-200 group"
-            onClick={() => setIsRunning(!isRunning)}
-          >
-            {isRunning ? (
-              <div className="flex gap-1 items-center">
-                <PauseIcon />
-                <span className="font-medium text-white group-hover:text-yellow-400 transition-colors">
-                  Pausar
-                </span>
-              </div>
-            ) : (
-              <div className="flex gap-1 items-center">
-                <Resume />
-                <span className="font-medium text-yellow-400 group-hover:text-green-400 transition-colors">
-                  Retomar
-                </span>
-              </div>
-            )}
-          </div>
+          {/* Isolated countdown component */}
+          <CountdownTimer endDate={endDate} onTimerEnd={handleTimerEnd} />
 
           <Button
             onClick={finish}
@@ -218,7 +138,7 @@ export default function Page() {
 
         <div className="flex-1 mt-4">
           {data && (
-            <Team
+            <DailyScreen
               developers={data}
               tasksCreated={tasksCreated}
               setTaksCreated={setTaksCreated}

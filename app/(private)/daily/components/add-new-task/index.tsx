@@ -29,7 +29,6 @@ export const NewPendecy = ({ isOpen, closeDialog, developer }: Props) => {
         <DialogHeader>
           <DialogTitle className="text-lg font-bold mb-8">
             Nova pendência
-            {/* <span className="text-green-200 ml-2">{developer.name}</span> */}
           </DialogTitle>
           <DialogDescription
             asChild
@@ -68,7 +67,7 @@ const PendencyForm = ({
       formData: { ...formState, status: "Pending" },
     });
 
-    queryClient.invalidateQueries({ queryKey: ["developers"] });
+    await queryClient.invalidateQueries({ queryKey: ["developers"] });
 
     closeDialog();
     toast.success("Pendência criada com sucesso!", {

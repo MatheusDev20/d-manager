@@ -8,7 +8,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/app/lib/shadcdn/components/ui/table";
-import { CircleMinus } from "lucide-react";
 import Image from "next/image";
 
 type Props = {
@@ -22,14 +21,19 @@ export const AppTable = ({ caption, head, values }: Props) => {
       <TableCaption>{caption}</TableCaption>
       <TableHeader>
         <TableRow>
-          {head.map((item, index) => (
-            <TableHead
-              key={index}
-              className={`${item === "Nome" ? "text-left ml-4 w-[40px]" : ""} font-medium w-[40px]`}
-            >
-              {item}
-            </TableHead>
-          ))}
+          {head.map((item, index) => {
+            const style = {
+              "Pendências Cadastradas": "text-center",
+            };
+            return (
+              <TableHead
+                key={index}
+                className={`${style[item as keyof typeof style]} font-medium `}
+              >
+                {item}
+              </TableHead>
+            );
+          })}
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -46,12 +50,8 @@ export const AppTable = ({ caption, head, values }: Props) => {
               {developer.name}
             </TableCell>
             <TableCell>{developer.status.toLocaleUpperCase()}</TableCell>
-            <TableCell>
-              {developer.status === "ativo" ? (
-                <CircleMinus className="w-6 h-5 cursor-pointer hover:text-green-400" />
-              ) : (
-                <p>Ativar</p>
-              )}
+            <TableCell className="text-center">
+              {developer.tasks.length}
             </TableCell>
           </TableRow>
         ))}
