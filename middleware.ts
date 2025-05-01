@@ -7,7 +7,7 @@ interface SessionData {
   isLoggedIn: boolean;
 }
 
-const protectedRoutes = ["/", "/team", "/daily", "/settings"];
+const protectedRoutes = ["/", "/team", "/daily", "/settings", "/api"];
 const publicRoutes = ["/login", "/register", "/forgot-password"];
 
 const sessionOptions = {
@@ -20,7 +20,6 @@ const sessionOptions = {
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-
   if (publicRoutes.some((route) => pathname.startsWith(route))) {
     return NextResponse.next();
   }
@@ -37,6 +36,10 @@ export async function middleware(request: NextRequest) {
       );
 
       if (!session.isLoggedIn) {
+        const fromAPI = pathname.startsWith("/api");
+        if (fromAPI) {
+          return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        }
         const url = new URL("/login", request.url);
         return NextResponse.redirect(url);
       }
@@ -52,6 +55,9 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+    "/",
+    "/(.*)",
+    // But still exclude static assets and images
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
 };
