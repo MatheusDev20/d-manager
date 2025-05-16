@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { Daily, StatsGeneralMetris } from "@/app/@types";
@@ -28,9 +27,24 @@ const supportedTimeRanges = [
 ];
 
 const data = [
-  { title: "Duração Total", icon: <AlarmClockCheck />, data: {} },
-  { title: "Pendências Adicionadas", icon: <BadgeAlert />, data: {} },
-  { title: "Pendências resolvidas", icon: <CheckCheck />, data: {} },
+  {
+    title: "Média de duração",
+    icon: <AlarmClockCheck />,
+    data: {},
+    calc: calculateAverageDailyDuration,
+  },
+  {
+    title: "Total de pendências adicionadas",
+    icon: <BadgeAlert />,
+    data: {},
+    calc: calcTotalTasksCreated,
+  },
+  {
+    title: "Pendências resolvidas",
+    icon: <CheckCheck />,
+    data: {},
+    calc: () => "-",
+  },
 ] as StatsGeneralMetris[];
 
 export default function Page() {
@@ -42,7 +56,8 @@ export default function Page() {
     queryKey: ["stats"],
     queryFn: async (): Promise<Daily[]> => {
       const now = formatISO(new Date());
-      const fiveDaysAgo = formatISO(subDays(new Date(), 50));
+      /* This will not be fiexed */
+      const fiveDaysAgo = formatISO(subDays(new Date(), 7));
 
       const response = await fetch(
         `/api/daily?start=${fiveDaysAgo}&end=${now}`,
@@ -59,16 +74,9 @@ export default function Page() {
   ) => {
     if (!dailys) return dataToComplete;
     const ouput = dataToComplete.map((each) => {
-      const map = {
-        "Duração Total": calculateAverageDailyDuration,
-        "Pendências Adicionadas": calcTotalTasksCreated,
-        "Pendências resolvidas": () => "-",
-      } as Record<any, any>;
-
-      const calcFn = map[each.title];
       return {
         ...each,
-        data: { value: calcFn(dailys) },
+        data: { value: each.calc(dailys) },
       };
     });
 
@@ -121,7 +129,7 @@ export default function Page() {
               key={i}
               className="flex-1 h-40 rounded-lg p-6 border-gray-700 shadow-md"
             >
-              <CardHeader className="text-gray-200 font-bold 2xl:text-2xl text-xs">
+              <CardHeader className="text-gray-200 font-bold text-lg">
                 <div className="flex items-center gap-4">
                   <span className="text-blue-400">{each.icon}</span>{" "}
                   {each.title}

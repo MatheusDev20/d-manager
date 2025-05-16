@@ -1,14 +1,16 @@
 import { Daily } from "../@types";
 
-export const calculateAverageDailyDuration = (dailys: Daily[]) => {
-  console.log("Calculating average daily duration...", dailys);
+export const calculateAverageDailyDuration = (dailys: Daily[]): string => {
+  if (dailys.length === 0) {
+    return "0.00 minutos";
+  }
+
   const totalDuration = dailys.reduce((acc, curr) => {
-    console.log("Current daily:", curr.durationInMinutes);
     return acc + curr.durationInMinutes;
   }, 0);
 
   const averageDuration = totalDuration / dailys.length;
-  return String(averageDuration) + " minutos";
+  return `${averageDuration.toFixed(2)} minutos`;
 };
 
 export const calcTotalTasksCreated = (dailys: Daily[]) => {

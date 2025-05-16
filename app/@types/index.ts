@@ -42,4 +42,5 @@ export type StatsGeneralMetris = {
   title: string;
   icon: JSX.Element;
   data: any;
+  calc: (dailys: Daily[]) => string;
 };
