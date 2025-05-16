@@ -1,7 +1,7 @@
 "use server";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Daily } from "@/app/@types";
+import { Daily, FetchInterval } from "@/app/@types";
 import prisma from "@/app/lib/prisma";
 
 export const saveDaily = async (daily: Daily) => {
@@ -29,3 +29,25 @@ export const getByCalendarDay = async (day: string): Promise<Daily | null> => {
     throw new Error("Error fetching daily", err);
   }
 };
+
+export const getDailyByInterval = async (interval: FetchInterval) => {
+  const { start, end } = interval;
+
+  try {
+    const dailys = await prisma.dailys.findMany({
+      where: {
+        finished_at: {
+          gte: start,
+          lte: end,
+        },
+      },
+    });
+    console.log("dailys", dailys);
+    return dailys as Daily[];
+  } catch (err: any) {
+    console.error(err);
+    throw new Error("Error fetching daily by Interval", err);
+  }
+};
+
+// 2025-04-23 01:57:44.957

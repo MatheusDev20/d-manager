@@ -3,7 +3,13 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
-import { Settings, UsersRound, Calendar, LogOutIcon } from "lucide-react";
+import {
+  Settings,
+  UsersRound,
+  Calendar,
+  ChartColumn,
+  LogOutIcon,
+} from "lucide-react";
 
 import {
   Sidebar,
@@ -14,11 +20,13 @@ import {
 } from "@/app/lib/shadcdn/components/ui/sidebar";
 import { ORG } from "@/app/generated/prisma";
 import { logout } from "@/app/server/actions/auth";
+import { Badge } from "@/app/lib/shadcdn/components/ui/badge";
 
 const items = [
   { title: "Calendário", url: "/", icon: Calendar },
   { title: "Time", url: "/team", icon: UsersRound },
   { title: "Configurações", url: "/settings", icon: Settings },
+  { title: "Estatísticas", url: "/stats", icon: ChartColumn, isAlpha: true },
 ];
 
 type Props = { organization: ORG | null };
@@ -65,6 +73,7 @@ export function AppSidebar({ organization }: Props) {
                   >
                     <item.icon className="w-5 h-5" />
                     <span>{item.title}</span>
+                    {item.isAlpha && <Badge variant="destructive">Alpha</Badge>}
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>

@@ -20,9 +20,8 @@ const sessionOptions = {
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  if (publicRoutes.some((route) => pathname.startsWith(route))) {
+  if (publicRoutes.some((route) => pathname.startsWith(route)))
     return NextResponse.next();
-  }
 
   const isProtected = protectedRoutes.some((route) =>
     pathname.startsWith(route),
@@ -36,10 +35,6 @@ export async function middleware(request: NextRequest) {
       );
 
       if (!session.isLoggedIn) {
-        // const fromAPI = pathname.startsWith("/api");
-        // if (fromAPI) {
-        //   return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-        // }
         const url = new URL("/login", request.url);
         return NextResponse.redirect(url);
       }

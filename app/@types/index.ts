@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { JSX } from "react";
+
 type PendingTask = {
   id: string;
   status: string;
@@ -28,4 +31,15 @@ export type Daily = {
   durationInMinutes: number;
   numberOfTasksCreated: number;
   wasFinishedInTime: boolean;
+};
+
+export type FetchInterval = {
+  start: string;
+  end: string;
+};
+
+export type StatsGeneralMetris = {
+  title: string;
+  icon: JSX.Element;
+  data: any;
 };
