@@ -32,7 +32,6 @@ export const getByCalendarDay = async (day: string): Promise<Daily | null> => {
 
 export const getDailyByInterval = async (interval: FetchInterval) => {
   const { start, end } = interval;
-
   try {
     const dailys = await prisma.dailys.findMany({
       where: {
@@ -42,12 +41,9 @@ export const getDailyByInterval = async (interval: FetchInterval) => {
         },
       },
     });
-    console.log("dailys", dailys);
     return dailys as Daily[];
   } catch (err: any) {
     console.error(err);
     throw new Error("Error fetching daily by Interval", err);
   }
 };
-
-// 2025-04-23 01:57:44.957

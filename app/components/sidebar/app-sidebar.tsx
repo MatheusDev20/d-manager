@@ -26,6 +26,7 @@ const items = [
   { title: "Calendário", url: "/", icon: Calendar },
   { title: "Time", url: "/team", icon: UsersRound },
   { title: "Configurações", url: "/settings", icon: Settings },
+  { title: "Minhas Pendências", url: "/my-tasks", icon: Calendar, isNew: true },
   { title: "Estatísticas", url: "/stats", icon: ChartColumn, isAlpha: true },
 ];
 
@@ -38,8 +39,8 @@ export function AppSidebar({ organization }: Props) {
       <SidebarContent className="flex flex-col justify-between h-full p-4">
         {/* ——— Logo + Org Top ——— */}
         <Link href="/" className="flex flex-col gap-2 mb-8">
-          <div className="flex gap-4">
-            <Image src="/clock.png" alt="Logo" width={24} height={24} />
+          <div className="flex gap-4 justify-start items-center">
+            <Image src="/clock.png" alt="Logo" width={32} height={32} />
             <span className="text-lg font-semibold">Daily Manager</span>
           </div>
           {organization && (
@@ -72,8 +73,9 @@ export function AppSidebar({ organization }: Props) {
                     `}
                   >
                     <item.icon className="w-5 h-5" />
-                    <span>{item.title}</span>
+                    <span className="w-full">{item.title}</span>
                     {item.isAlpha && <Badge variant="destructive">Alpha</Badge>}
+                    {item.isNew && <Badge variant="success">Novo</Badge>}
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>

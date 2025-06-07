@@ -11,7 +11,6 @@ async function createOrganization() {
       },
     });
 
-    console.log("Created organization:", newOrg);
     return newOrg;
   } catch (error) {
     console.error("Error creating organization:", error);

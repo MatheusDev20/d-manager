@@ -14,16 +14,16 @@ import { Badge } from "@/app/lib/shadcdn/components/ui/badge";
 import { Button } from "@/app/lib/shadcdn/components/ui/button";
 import { pickPriorityColor, pickPriorityVariant } from "@/app/utils/utils";
 
-import { BadgeCheck, Pencil, PlusIcon, Trash2, X } from "lucide-react";
+import { BadgeCheck, Pencil, PlusIcon, X } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import { UpdateTaskData } from "../daily-screen";
 
 type Props = {
   developer: Developer;
-  solveTask: (taskId: string) => Promise<void>;
-  addTask: (developer: Developer) => void;
-  updateTask: (data: UpdateTaskData) => Promise<void>;
+  solveTask?: (taskId: string) => Promise<void>;
+  addTask?: (developer: Developer) => void;
+  updateTask?: (data: UpdateTaskData) => Promise<void>;
 };
 export const DeveloperTasks = ({
   developer,
@@ -86,11 +86,12 @@ export const DeveloperTasks = ({
   ];
 
   const handleUpdateTask = async (taskId: string) => {
-    await updateTask({
-      description: editForm.description,
-      priority: editForm.priority,
-      taskId,
-    });
+    if (updateTask)
+      await updateTask({
+        description: editForm.description,
+        priority: editForm.priority,
+        taskId,
+      });
 
     setIsEditing({
       taskId: "",
@@ -134,7 +135,7 @@ export const DeveloperTasks = ({
                       <span
                         className={`inline-block w-2 h-2 ${pickPriorityColor(task.priority)} rounded-full`}
                       ></span>
-                      {editMode ? (
+                      {editMode && updateTask ? (
                         <AppInput
                           bg="bg-background"
                           name="description"
@@ -175,6 +176,7 @@ export const DeveloperTasks = ({
                       )}
                       {/* Something changed at all?  */}
                       {editMode &&
+                        updateTask &&
                         (task.priority !== editForm.priority ||
                           task.description !== editForm.description) && (
                           <Button
@@ -189,10 +191,12 @@ export const DeveloperTasks = ({
 
                     <div className="flex gap-5">
                       <AppTooltip content="Resolver Pendência">
-                        <BadgeCheck
-                          onClick={() => solveTask(task.id)}
-                          className="text-white hover:text-green-600 cursor-pointer"
-                        />
+                        {solveTask && (
+                          <BadgeCheck
+                            onClick={() => solveTask(task.id)}
+                            className="text-white hover:text-green-600 cursor-pointer"
+                          />
+                        )}
                       </AppTooltip>
                       <AppTooltip content="Editar Pendência">
                         {editMode ? (
@@ -205,32 +209,37 @@ export const DeveloperTasks = ({
                             />
                           </AppTooltip>
                         ) : (
-                          <Pencil
-                            onClick={() => handleEditAction(task.id, task)}
-                            className="text-white font-semibold hover:text-gray-700 cursor-pointer"
-                          />
+                          <div>
+                            {updateTask && (
+                              <Pencil
+                                onClick={() => handleEditAction(task.id, task)}
+                                className="text-white font-semibold hover:text-gray-700 cursor-pointer"
+                              />
+                            )}
+                          </div>
                         )}
                       </AppTooltip>
-                      <AppTooltip content="Excluir Pendência">
+                      {/* <AppTooltip content="Excluir Pendência">
                         <Trash2 className="text-white hover:text-red-300 cursor-pointer" />
-                      </AppTooltip>
+                      </AppTooltip> */}
                     </div>
                   </li>
                 );
               })}
             </>
           )}
-
-          <li className="flex justify-center mt-4">
-            <Button
-              variant="ghost"
-              className="border-gray-600 p-6 border w-full dark:text-gray-300 dark: hover:bg-gray-300 cursor-pointer rounded-md"
-              onClick={() => addTask(developer)}
-            >
-              <PlusIcon className="mr-2" />
-              Adicionar nova pendência
-            </Button>
-          </li>
+          {addTask && (
+            <li className="flex justify-center mt-4">
+              <Button
+                variant="ghost"
+                className="border-gray-600 p-6 border w-full dark:text-gray-300 dark: hover:bg-gray-300 cursor-pointer rounded-md"
+                onClick={() => addTask(developer)}
+              >
+                <PlusIcon className="mr-2" />
+                Adicionar nova pendência
+              </Button>
+            </li>
+          )}
         </ul>
       </AccordionContent>
     </AccordionItem>
