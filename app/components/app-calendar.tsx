@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -7,9 +8,14 @@ import { Dailys } from "../generated/prisma";
 type Props = {
   startNewDaily: (date: Date) => void;
   monthDailys: Dailys[];
+  updateMonth: (data: any) => void;
 };
 
-export const AppCalendar = ({ startNewDaily, monthDailys }: Props) => {
+export const AppCalendar = ({
+  startNewDaily,
+  monthDailys,
+  updateMonth,
+}: Props) => {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -24,11 +30,16 @@ export const AppCalendar = ({ startNewDaily, monthDailys }: Props) => {
     (daily) => new Date(`${daily.day}T00:00:00`),
   );
 
+  const updateParentState = (data: any) => {
+    updateMonth(data);
+  };
+
   if (!mounted) return null;
   return (
     <div className="flex justify-center">
       <Calendar
         timeZone="America/Sao_Paulo"
+        onMonthChange={(data) => updateParentState(data)}
         disabled={(date) => date > new Date()}
         onDayClick={handleDateClick}
         modifiers={{

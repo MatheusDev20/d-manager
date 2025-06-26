@@ -13,6 +13,7 @@ export default function Page() {
     params: { date: Date | null };
   }>({ isOpen: false, params: { date: null } });
   const [isLoading, setLoading] = useState(false);
+  const [currentMonth, setCurrentMonth] = useState(new Date());
 
   const newDaily = async (date: Date) => {
     setDialogState({
@@ -22,9 +23,9 @@ export default function Page() {
   };
 
   const { data: monthDailys } = useQuery({
-    queryKey: ["monthDailys"],
+    queryKey: ["monthDailys", currentMonth],
     queryFn: async () => {
-      const now = new Date();
+      const now = currentMonth || new Date();
       const firstDayOfMonth = startOfMonth(now);
       const lastDayOfMonth = endOfMonth(now);
       const response = await fetch(
@@ -43,7 +44,11 @@ export default function Page() {
     <DeveloperProvider>
       <div className="flex w-full p-4 h-screen flex-col items-center">
         {isLoading && <BackdropSpinner />}
-        <AppCalendar startNewDaily={newDaily} monthDailys={monthDailysData} />
+        <AppCalendar
+          startNewDaily={newDaily}
+          monthDailys={monthDailysData}
+          updateMonth={setCurrentMonth}
+        />
         {dialogState.params.date && (
           <ManagerDialogs
             setLoading={setLoading}
