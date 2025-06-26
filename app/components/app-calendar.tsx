@@ -2,13 +2,16 @@
 
 import React, { useEffect, useState } from "react";
 import { Calendar } from "@/app/lib/shadcdn/components/ui/calendar";
+import { Dailys } from "../generated/prisma";
 
 type Props = {
   startNewDaily: (date: Date) => void;
+  monthDailys: Dailys[];
 };
 
-export const AppCalendar = ({ startNewDaily }: Props) => {
+export const AppCalendar = ({ startNewDaily, monthDailys }: Props) => {
   const [mounted, setMounted] = useState(false);
+
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -16,6 +19,11 @@ export const AppCalendar = ({ startNewDaily }: Props) => {
   const handleDateClick = (date: Date) => {
     startNewDaily(date);
   };
+
+  const realizedDailys = monthDailys.map(
+    (daily) => new Date(`${daily.day}T00:00:00`),
+  );
+
   if (!mounted) return null;
   return (
     <div className="flex justify-center">
@@ -23,6 +31,17 @@ export const AppCalendar = ({ startNewDaily }: Props) => {
         timeZone="America/Sao_Paulo"
         disabled={(date) => date > new Date()}
         onDayClick={handleDateClick}
+        modifiers={{
+          realized: realizedDailys,
+          weekend: (date) => {
+            const d = date.getDay();
+            return d === 0 || d === 6;
+          },
+        }}
+        modifiersClassNames={{
+          realized: "text-green-400 font-bold",
+          weekend: "text-red-400 font-bold rounded-full",
+        }}
         className="rounded-md border"
       />
     </div>
