@@ -36,6 +36,7 @@ model PendingTasks {
     customer String?
     developer Developer @relation(fields: [developerId], references: [id])
     developerId Int
+    deadline String?
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }

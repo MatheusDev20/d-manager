@@ -12,12 +12,17 @@ import {
 } from "@/app/lib/shadcdn/components/ui/accordion";
 import { Badge } from "@/app/lib/shadcdn/components/ui/badge";
 import { Button } from "@/app/lib/shadcdn/components/ui/button";
-import { pickPriorityColor, pickPriorityVariant } from "@/app/utils/utils";
+import {
+  getDateObj,
+  pickPriorityColor,
+  pickPriorityVariant,
+} from "@/app/utils/utils";
 
-import { BadgeCheck, Pencil, PlusIcon, X } from "lucide-react";
+import { BadgeCheck, Pencil, PlusIcon, X, ClockAlert } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import { UpdateTaskData } from "../daily-screen";
+import { InputPicker } from "@/app/components/picker";
 
 type Props = {
   developer: Developer;
@@ -39,6 +44,7 @@ export const DeveloperTasks = ({
   const [editForm, setEditForm] = React.useState({
     description: "",
     priority: "",
+    deadline: "",
   });
 
   const handleEditAction = (taskId: string, task: any) => {
@@ -51,6 +57,7 @@ export const DeveloperTasks = ({
       setEditForm({
         description: "",
         priority: "",
+        deadline: "",
       });
     } else {
       setIsEditing({
@@ -60,6 +67,7 @@ export const DeveloperTasks = ({
       setEditForm({
         description: task.description || "",
         priority: task.priority || "",
+        deadline: task.deadline || "",
       });
     }
   };
@@ -73,9 +81,20 @@ export const DeveloperTasks = ({
       });
       return;
     }
+
     setEditForm({
       ...editForm,
       [e.target.name]: e.target.value,
+    });
+  };
+  const changeDeadline = (dt: Date) => {
+    setEditForm({
+      ...editForm,
+      deadline: dt.toLocaleDateString("pt-BR", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      }),
     });
   };
 
@@ -90,6 +109,7 @@ export const DeveloperTasks = ({
       await updateTask({
         description: editForm.description,
         priority: editForm.priority,
+        deadline: editForm.deadline,
         taskId,
       });
 
@@ -126,12 +146,19 @@ export const DeveloperTasks = ({
             <>
               {developer.tasks.map((task) => {
                 const editMode = isEditing.taskId === task.id;
+                const isDeadlinePassed = task.deadline
+                  ? getDateObj(task.deadline) < new Date()
+                  : false;
+                if (task.deadline) console.log(getDateObj(task.deadline));
+
                 return (
                   <li
                     key={task.id}
-                    className="flex items-center justify-between gap-2 md:p-4 border rounded-md dark:bg-secondary"
+                    className={`flex items-center justify-between gap-2 md:p-4 border rounded-md dark:bg-secondary ${
+                      isDeadlinePassed ? "border-red-200 border" : ""
+                    }`}
                   >
-                    <div className="flex gap-4 flex-1 justi items-center">
+                    <div className="flex gap-4 flex-1 items-center">
                       <span
                         className={`inline-block w-2 h-2 ${pickPriorityColor(task.priority)} rounded-full`}
                       ></span>
@@ -174,11 +201,25 @@ export const DeveloperTasks = ({
                           {pickPriorityVariant(task.priority).label}
                         </Badge>
                       )}
+                      {task.deadline && !editMode && (
+                        <div className="px-4 flex gap-3 items-center">
+                          <ClockAlert className="w-4 h-4" />
+                          {task.deadline}
+                        </div>
+                      )}
+                      {task.deadline && editMode && (
+                        <InputPicker
+                          change={changeDeadline}
+                          value={task.deadline}
+                        />
+                      )}
+
                       {/* Something changed at all?  */}
                       {editMode &&
                         updateTask &&
                         (task.priority !== editForm.priority ||
-                          task.description !== editForm.description) && (
+                          task.description !== editForm.description ||
+                          task.deadline !== editForm.deadline) && (
                           <Button
                             className="bg-green-300 cursor-pointer hover:bg-green-500"
                             disabled={false}
@@ -190,14 +231,17 @@ export const DeveloperTasks = ({
                     </div>
 
                     <div className="flex gap-5">
-                      <AppTooltip content="Resolver Pendência">
-                        {solveTask && (
-                          <BadgeCheck
-                            onClick={() => solveTask(task.id)}
-                            className="text-white hover:text-green-600 cursor-pointer"
-                          />
-                        )}
-                      </AppTooltip>
+                      {!editMode && (
+                        <AppTooltip content="Resolver Pendência">
+                          {solveTask && (
+                            <BadgeCheck
+                              onClick={() => solveTask(task.id)}
+                              className="text-white hover:text-green-600 cursor-pointer"
+                            />
+                          )}
+                        </AppTooltip>
+                      )}
+
                       <AppTooltip content="Editar Pendência">
                         {editMode ? (
                           <AppTooltip content="Cancelar Edição">

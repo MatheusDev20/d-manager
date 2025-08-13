@@ -26,11 +26,13 @@ type UpdateData = {
   taskId: string;
   description: string;
   priority: string;
+  deadline?: string;
 };
 export async function updateAction({
   description,
   priority,
   taskId,
+  deadline,
 }: UpdateData) {
   try {
     const updatedTask = await prisma.pendingTasks.update({
@@ -40,6 +42,7 @@ export async function updateAction({
       data: {
         description,
         priority,
+        deadline,
       },
     });
 

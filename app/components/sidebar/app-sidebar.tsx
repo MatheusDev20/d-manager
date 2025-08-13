@@ -20,7 +20,6 @@ import {
 } from "@/app/lib/shadcdn/components/ui/sidebar";
 import { ORG } from "@/app/generated/prisma";
 import { logout } from "@/app/server/actions/auth";
-import { Badge } from "@/app/lib/shadcdn/components/ui/badge";
 
 const items = [
   { title: "Calendário", url: "/", icon: Calendar },
@@ -74,8 +73,8 @@ export function AppSidebar({ organization }: Props) {
                   >
                     <item.icon className="w-5 h-5" />
                     <span className="w-full">{item.title}</span>
-                    {item.isAlpha && <Badge variant="destructive">Alpha</Badge>}
-                    {item.isNew && <Badge variant="success">Novo</Badge>}
+                    {/* {item.isAlpha && <Badge variant="destructive">Alpha</Badge>} */}
+                    {/* {item.isNew && <Badge variant="success">Novo</Badge>} */}
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>

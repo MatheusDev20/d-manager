@@ -15,6 +15,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { createNewTaks } from "@/app/server/actions/developers";
 import { AppSelect } from "@/app/components/select/app-select";
+import { InputPicker } from "@/app/components/picker";
 
 type Props = {
   isOpen: boolean;
@@ -46,6 +47,7 @@ type Form = {
   customer: string;
   priority: string;
   description: string;
+  deadline: string;
 };
 const PendencyForm = ({
   dev,
@@ -59,6 +61,7 @@ const PendencyForm = ({
     description: "",
     customer: "",
     priority: "",
+    deadline: "",
   });
 
   const submitForm = async (devId: number, formState: Form) => {
@@ -86,6 +89,18 @@ const PendencyForm = ({
     }));
   };
 
+  const handlePickerChange = (selectedDate: Date) => {
+    const formatted = selectedDate.toLocaleDateString("pt-BR", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
+    setFormState((prev) => ({
+      ...prev,
+      deadline: formatted,
+    }));
+  };
+
   return (
     <form className="flex flex-col gap-8">
       <div>
@@ -110,6 +125,9 @@ const PendencyForm = ({
           className="mt-3"
           placeholder="Configuração de VPN do cliente..."
         />
+      </div>
+      <div>
+        <InputPicker change={handlePickerChange} />
       </div>
       <div className="flex gap-3">
         <div className="w-[50%]">

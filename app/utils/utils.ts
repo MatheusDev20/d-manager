@@ -50,3 +50,10 @@ export const isEmailValid = (email: string) => {
   const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return re.test(email);
 };
+
+export const getDateObj = (dt: string) => {
+  const [day, month, year] = dt.split("/").map(Number);
+  const date = new Date(year, month - 1, day);
+
+  return date;
+};

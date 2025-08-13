@@ -14,6 +14,7 @@ export type UpdateTaskData = {
   taskId: string;
   description: string;
   priority: string;
+  deadline?: string;
 };
 type Props = {
   developers: Developer[];
@@ -35,7 +36,7 @@ export const DailyScreen = ({ developers, setTaksCreated }: Props) => {
 
   const updateTask = async (data: UpdateTaskData) => {
     await updateAction(data);
-    queryClient.invalidateQueries({ queryKey: ["developers"] });
+    await queryClient.invalidateQueries({ queryKey: ["developers"] });
     toast.success("Pendência atualizada com sucesso!", {
       position: "top-right",
       duration: 5000,

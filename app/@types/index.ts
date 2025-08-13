@@ -9,6 +9,7 @@ type PendingTask = {
   description: string;
   priority: TaskPriority;
   customer: string | null;
+  deadline: string | null;
   developerId: number;
 };
 
