@@ -25,7 +25,7 @@ export function InputPicker({
 
   return (
     <div className="flex flex-col gap-3">
-      {!value && <span className="px-1">Deadline estimada</span>}
+      {!value && <span className="text-sm">Deadline estimada</span>}
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button

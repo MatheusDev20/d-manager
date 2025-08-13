@@ -169,6 +169,7 @@ const PendencyForm = ({
         disabled={Object.values({
           description: formState.description,
           priority: formState.priority,
+          deadline: formState.deadline,
         }).some((value) => !value)}
         className="md:w-[50%] self-end cursor-pointer"
       >
