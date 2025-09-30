@@ -47,7 +47,7 @@ export const DailyScreen = ({ developers, setTaksCreated }: Props) => {
   const markAsSolved = async (taskId: string) => {
     await doneTask(taskId);
 
-    queryClient.invalidateQueries({ queryKey: ["developers"] });
+    await queryClient.invalidateQueries({ queryKey: ["developers"] });
     toast.success("Pendência marcada como resolvida", {
       position: "top-right",
       duration: 5000,

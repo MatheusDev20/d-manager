@@ -32,6 +32,12 @@ const items = [
 type Props = { organization: ORG | null };
 export function AppSidebar({ organization }: Props) {
   const path = usePathname();
+  const orgLogo = {
+    "Aktie Now": "/aktienow.png",
+  };
+  const logo = organization
+    ? orgLogo[organization.name as keyof typeof orgLogo]
+    : "/clock.png";
 
   return (
     <Sidebar className="h-screen">
@@ -45,7 +51,7 @@ export function AppSidebar({ organization }: Props) {
           {organization && (
             <div className="pt-4 border-t flex items-center gap-4 mt-4">
               <Image
-                src={organization.picture}
+                src={logo}
                 alt={organization.name}
                 width={40}
                 height={40}
